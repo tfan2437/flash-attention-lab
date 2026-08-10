@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flash-lab"
+version = "0.1.0"
+description = "FlashAttention-2 forward and KV-cache decode kernels in CUDA and Triton"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = ["torch>=2.4", "numpy"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-xdist", "ruff", "pre-commit"]
+bench = ["matplotlib", "pandas"]
+
+[tool.setuptools.packages.find]
+include = ["flash_lab*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+markers = [
+    "gpu: needs a CUDA device and the compiled extension",
+    "slow: large shapes (S >= 4096 or B*H >= 64)",
+    "sanitize: small subset run under compute-sanitizer",
+]
