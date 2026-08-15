@@ -1,0 +1,47 @@
+# Environment
+
+Code is written and CPU-tested on a laptop without a GPU. Everything that needs CUDA runs on
+Georgia Tech's PACE-ICE cluster (H100 nodes, A100 or L40S when the H100 queue is long).
+
+## PACE-ICE access
+
+Off campus, connect to the GT VPN first. Logins use a password and Duo, so the SSH config shares
+one authenticated connection for the day:
+
+```
+Host pace
+    HostName login-ice.pace.gatech.edu
+    User <gt-username>
+    ControlMaster auto
+    ControlPath ~/.ssh/cm-%r@%h:%p
+    ControlPersist 8h
+```
+
+Work lives under scratch (`~/scratch/flash-attention-lab`); home has a 30 GB quota. Run
+`pace-quota` on any ICE node to find the scratch path if the `~/scratch` link does not exist yet.
+
+## Loop
+
+```bash
+scripts/pace/sync.sh push                       # laptop -> scratch (includes .git)
+ssh pace 'cd scratch/flash-attention-lab && scripts/pace/alloc.sh h100 4'
+ssh pace 'cd scratch/flash-attention-lab && scripts/pace/gpu.sh scripts/pace/setup_env.sh'  # once
+ssh pace 'cd scratch/flash-attention-lab && scripts/pace/gpu.sh scripts/pace/build.sh'
+ssh pace 'cd scratch/flash-attention-lab && scripts/pace/gpu.sh scripts/pace/test.sh'
+scripts/pace/sync.sh pull                       # runs/, bench/results/, profiling/ back
+ssh pace 'scancel "$(cat scratch/flash-attention-lab/.slurm_job)"'
+```
+
+`alloc.sh` holds one GPU (`salloc --no-shell`) so that repeated builds and test runs do not wait
+in the queue; `gpu.sh` runs a command on it with `srun --overlap`.
+
+Each script writes `runs/<timestamp>-<sha>-<name>/` containing the command, an environment JSON
+(GPU, driver, clocks, library versions, git SHA, Slurm job), the full log, and a summary.
+Benchmark results that end up in the README are produced from a clean checkout, so their
+environment block names an exact commit.
+
+## Modules and versions
+
+`scripts/pace/env.sh` loads `uv` and `cuda/12.6.1` (override with `FLASH_LAB_MODULES`).
+`scripts/pace/setup_env.sh` installs torch from the `cu126` wheel index (override with
+`TORCH_INDEX`) and freezes the result in `requirements-pace.lock`.
