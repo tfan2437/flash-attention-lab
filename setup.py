@@ -34,8 +34,8 @@ if want_cuda():
     sources = sorted(glob.glob("csrc/**/*.cpp", recursive=True))
     sources += sorted(glob.glob("csrc/**/*.cu", recursive=True))
 
-    cxx_flags = ["-O3", "-std=c++17"]
-    nvcc_flags = ["-O3", "-std=c++17", "-lineinfo"]
+    cxx_flags = ["-O3", "-std=c++20"]
+    nvcc_flags = ["-O3", "-std=c++20", "-lineinfo"]
     if os.environ.get("FLASH_LAB_PTXAS_VERBOSE") == "1":
         nvcc_flags.append("-Xptxas=-v")
     if os.environ.get("FLASH_LAB_DEBUG") == "1":
