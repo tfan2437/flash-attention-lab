@@ -59,7 +59,11 @@ class DecodeImpl:
         return None
 
 
-PREFILL_IMPLS: dict[str, PrefillImpl] = {}
+PREFILL_IMPLS: dict[str, PrefillImpl] = {
+    "fp32_fused": PrefillImpl(
+        op="attention_fp32_fused", dtypes=(torch.float32,), head_dims=(64, 128)
+    ),
+}
 DECODE_IMPLS: dict[str, DecodeImpl] = {}
 
 

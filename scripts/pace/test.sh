@@ -5,7 +5,10 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 source scripts/pace/env.sh
 source scripts/pace/common.sh
-start_run test "$@"
 
-python -c "import torch; print(torch.cuda.get_device_name())"
-python -m pytest -q "$@"
+run_tests() {
+  python -c "import torch; print(torch.cuda.get_device_name())"
+  python -m pytest -q "$@"
+}
+
+run_logged test run_tests "$@"

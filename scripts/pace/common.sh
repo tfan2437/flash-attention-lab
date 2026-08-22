@@ -1,8 +1,11 @@
-# Sourced by the PACE scripts after env.sh. start_run <name> [args...] creates
-# runs/<YYYYMMDD-HHMMSS>-<sha7>[-dirty]-<name>/ with the command line and environment, tees the
-# rest of the script's output into stdout.log, and writes summary.md when the script exits.
+# Sourced by the PACE scripts after env.sh.
+#
+# run_logged <name> <command...> creates runs/<YYYYMMDD-HHMMSS>-<sha7>[-dirty]-<name>/ with the
+# command line and environment, runs the command with its output teed into stdout.log, writes
+# summary.md, and returns the command's exit status. The pipeline is waited on in the foreground,
+# so no output is lost when srun tears the job step down.
 
-start_run() {
+start_run_dir() {
   local name="$1"
   shift
   mkdir -p runs bench/results profiling
@@ -14,14 +17,11 @@ start_run() {
   mkdir -p "$RUN_DIR"
   echo "$name $*" >"$RUN_DIR/cmd.txt"
   python -m bench.env >"$RUN_DIR/env.json" 2>"$RUN_DIR/env.err" || true
-  exec > >(tee -a "$RUN_DIR/stdout.log") 2>&1
-  trap 'finish_run $?' EXIT
-  echo "run dir: $RUN_DIR"
+  export GIT_SHA RUN_DIR
 }
 
-finish_run() {
+write_summary() {
   local status="$1"
-  sleep 1 # let tee flush before the log is summarized
   {
     echo "# $(basename "$RUN_DIR")"
     echo
@@ -33,4 +33,17 @@ finish_run() {
     tail -n 60 "$RUN_DIR/stdout.log"
     echo '```'
   } >"$RUN_DIR/summary.md"
+}
+
+run_logged() {
+  local name="$1"
+  shift
+  start_run_dir "$name" "$@"
+  echo "run dir: $RUN_DIR" | tee "$RUN_DIR/stdout.log"
+  set +e
+  "$@" 2>&1 | tee -a "$RUN_DIR/stdout.log"
+  local status="${PIPESTATUS[0]}"
+  set -e
+  write_summary "$status"
+  return "$status"
 }

@@ -171,3 +171,13 @@ def test_decode_rejects_lengths_outside_the_cache():
         reference.decode(q, k_cache, v_cache, torch.tensor([3, 9], dtype=torch.int32))
     with pytest.raises(ValueError, match="outside"):
         reference.decode(q, k_cache, v_cache, torch.tensor([0, 1], dtype=torch.int32))
+
+
+@pytest.mark.parametrize("seqlen_q,seqlen_k", [(50, 70), (70, 50)])
+@pytest.mark.parametrize("causal", [False, True])
+def test_attention_rows_matches_full_rows(seqlen_q, seqlen_k, causal):
+    q, k, v = make_qkv(2, seqlen_q, seqlen_k, 4, 2, 16)
+    rows = torch.tensor([0, 7, 31, seqlen_q - 1])
+    full = reference.attention(q, k, v, causal=causal)
+    part = reference.attention_rows(q, k, v, rows, causal=causal)
+    torch.testing.assert_close(part, full[:, rows], **EXACT)

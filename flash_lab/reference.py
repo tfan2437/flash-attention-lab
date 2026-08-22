@@ -57,6 +57,36 @@ def attention(
     return (out, lse) if return_lse else out
 
 
+def attention_rows(
+    q: torch.Tensor,
+    k: torch.Tensor,
+    v: torch.Tensor,
+    rows: torch.Tensor,
+    causal: bool = False,
+    softmax_scale: float | None = None,
+    dtype: torch.dtype = torch.float64,
+) -> torch.Tensor:
+    """attention() for the query rows listed in `rows` only, [B, len(rows), H, D].
+
+    The causal mask still uses each row's position in the full sequence. Used to check outputs
+    of long sequences whose full score matrix would not fit in memory.
+    """
+    shape = check_attention_inputs(q, k, v, require_unit_stride=False)
+    scale = _default_scale(shape.head_dim, softmax_scale)
+    q_ = q[:, rows].to(dtype)
+    k_ = _expand_kv(k.to(dtype), shape.group)
+    v_ = _expand_kv(v.to(dtype), shape.group)
+    scores = torch.einsum("bqhd,bkhd->bhqk", q_, k_) * scale
+    if causal:
+        cols = torch.arange(shape.seqlen_k, device=q.device)[None, :]
+        hidden = cols > rows.to(q.device)[:, None] + (shape.seqlen_k - shape.seqlen_q)
+        scores = scores.masked_fill(hidden, float("-inf"))
+    lse = torch.logsumexp(scores, dim=-1)
+    shift = lse.masked_fill(torch.isneginf(lse), 0.0)
+    probs = torch.exp(scores - shift.unsqueeze(-1))
+    return torch.einsum("bhqk,bkhd->bqhd", probs, v_)
+
+
 def attention_tiled(
     q: torch.Tensor,
     k: torch.Tensor,

@@ -18,6 +18,13 @@ def _seed():
     torch.manual_seed(0)
 
 
+@pytest.fixture(autouse=True, scope="session")
+def _no_tf32():
+    # fp32 baselines must really be fp32: TF32 matmuls would loosen the reference comparisons.
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
+
+
 @pytest.fixture(scope="session")
 def flash_ops():
     """torch.ops.flash_lab, failing loudly if a GPU is present but the extension did not load."""
