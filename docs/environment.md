@@ -40,6 +40,16 @@ Each script writes `runs/<timestamp>-<sha>-<name>/` containing the command, an e
 Benchmark results that end up in the README are produced from a clean checkout, so their
 environment block names an exact commit.
 
+## Verified setup (2026-08-22)
+
+- GPU: NVIDIA H100 80GB HBM3 (SXM5, 132 SMs, compute capability 9.0), driver 595.71.05, partition
+  `ice-gpu`. `nvidia-smi` reported an SM clock of 1980 MHz and a memory clock of 2619 MHz.
+- Toolchain: `cuda/12.6.1` (nvcc 12.6) with gcc 12.3 as the host compiler. The extension is built
+  as C++20 because the torch 2.14 headers require it.
+- Python 3.12.12, torch 2.14.1+cu126, triton 3.8.0; the full list is in `requirements-pace.lock`.
+- Profilers: Nsight Compute 2026.2.1 reads hardware counters without extra permissions; Nsight
+  Systems 2024.4.2 and `compute-sanitizer` come with the CUDA module.
+
 ## Modules and versions
 
 `scripts/pace/env.sh` loads `uv` and `cuda/12.6.1` (override with `FLASH_LAB_MODULES`).
