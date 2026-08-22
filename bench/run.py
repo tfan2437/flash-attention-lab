@@ -210,6 +210,7 @@ def parse_args(argv):
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--out-dir", type=Path, help="default: bench/results/<gpu>")
     parser.add_argument("--allow-dirty", action="store_true", help="write to runs/ instead")
+    parser.add_argument("--tag", help="appended to the output file name, e.g. tile-16x16")
     return parser.parse_args(argv)
 
 
@@ -259,9 +260,10 @@ def main(argv=None) -> int:
         "n_warmup": args.n_warmup,
         "n_iters": args.n_iters,
         "seed": args.seed,
+        "tag": args.tag,
         "results": results,
     }
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M")
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
     sha = (env["git_sha"] or "nogit")[:7]
     if args.allow_dirty and env["git_dirty"]:
         out_dir = Path("runs") / "bench"
@@ -269,7 +271,8 @@ def main(argv=None) -> int:
     else:
         out_dir = args.out_dir or Path("bench/results") / gpu_slug(env.get("gpu", "cpu"))
     out_dir.mkdir(parents=True, exist_ok=True)
-    path = out_dir / f"{stamp}-{sha}-{args.suite}.json"
+    tag = f"-{args.tag}" if args.tag else ""
+    path = out_dir / f"{stamp}-{sha}-{args.suite}{tag}.json"
     path.write_text(json.dumps(out, indent=1) + "\n")
     print(f"wrote {path}")
     return 0
