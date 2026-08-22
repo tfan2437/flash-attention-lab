@@ -45,13 +45,16 @@ environment block names an exact commit.
 - GPU: NVIDIA H100 80GB HBM3 (SXM5, 132 SMs, compute capability 9.0), driver 595.71.05, partition
   `ice-gpu`. `nvidia-smi` reported an SM clock of 1980 MHz and a memory clock of 2619 MHz.
 - Toolchain: `cuda/12.6.1` (nvcc 12.6) with gcc 12.3 as the host compiler. The extension is built
-  as C++20 because the torch 2.14 headers require it.
-- Python 3.12.12, torch 2.14.1+cu126, triton 3.8.0; the full list is in `requirements-pace.lock`.
+  as C++20, which newer torch headers (2.14) require and 2.8 accepts.
+- Python 3.12.12, torch 2.8.0+cu126, triton 3.4.0, flash-attn 2.8.3.post1; the full list is in
+  `requirements-pace.lock`. torch is pinned to 2.8 because flash-attn 2.x ships prebuilt wheels
+  only up to torch 2.8, and flash-attn is the external baseline for prefill and decode.
 - Profilers: Nsight Compute 2026.2.1 reads hardware counters without extra permissions; Nsight
   Systems 2024.4.2 and `compute-sanitizer` come with the CUDA module.
 
 ## Modules and versions
 
 `scripts/pace/env.sh` loads `uv` and `cuda/12.6.1` (override with `FLASH_LAB_MODULES`).
-`scripts/pace/setup_env.sh` installs torch from the `cu126` wheel index (override with
-`TORCH_INDEX`) and freezes the result in `requirements-pace.lock`.
+`scripts/pace/setup_env.sh` installs torch 2.8.0 from the `cu126` wheel index (override with
+`TORCH_VERSION` and `TORCH_INDEX`) plus the matching flash-attn wheel, and freezes the result in
+`requirements-pace.lock`.
