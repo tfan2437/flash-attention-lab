@@ -12,6 +12,12 @@ TORCH_LIBRARY(flash_lab, m) {
   m.def(
       "attention_fp32_fused(Tensor q, Tensor k, Tensor v, bool causal, float softmax_scale)"
       " -> (Tensor, Tensor)");
+  m.def(
+      "attention_mma(Tensor q, Tensor k, Tensor v, bool causal, float softmax_scale)"
+      " -> (Tensor, Tensor)");
+
+  // Test helper: one 16 x K by K x 16 bf16 tile product through ldmatrix + mma.sync.
+  m.def("mma_tile_test(Tensor a, Tensor b, bool trans_b) -> Tensor");
 }
 
 // The module has no Python attributes; it only needs to be importable.

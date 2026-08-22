@@ -36,7 +36,7 @@ P = PrefillConfig
 D = DecodeConfig
 
 PREFILL_BF16_IMPLS = (
-    "bf16_mma",
+    "mma",
     "triton",
     "sdpa_flash",
     "sdpa_cudnn",

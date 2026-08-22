@@ -20,7 +20,11 @@ GUARD = {torch.float32: 2e-5, torch.bfloat16: 2e-2, torch.float16: 1e-2}
 LSE_FLOOR = {torch.float32: 1e-5, torch.bfloat16: 1e-3, torch.float16: 1e-3}
 
 # (impl, dtype) pairs under test. Each kernel adds its rows here.
-IMPLS = [("fp32_fused", torch.float32)]
+IMPLS = [
+    ("fp32_fused", torch.float32),
+    ("mma", torch.bfloat16),
+    ("mma", torch.float16),
+]
 
 SHAPES = [
     # batch, seqlen_q, seqlen_k, heads, heads_kv, head_dim

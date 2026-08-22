@@ -35,6 +35,6 @@ def test_suites_are_well_formed(name, suite):
     for cfg in suite.configs:
         assert cfg.heads % cfg.heads_kv == 0
         assert cfg.head_dim in (64, 128)
-    known = set(baselines.SDPA_BACKENDS) | {"flash_attn", "fp32_fused", "bf16_mma", "triton"}
+    known = set(baselines.SDPA_BACKENDS) | {"flash_attn", "fp32_fused", "mma", "triton"}
     known |= {"splitkv"}
     assert set(suite.impls) <= known
