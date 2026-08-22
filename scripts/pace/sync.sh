@@ -14,7 +14,8 @@ case "${1:-}" in
     # Excluded paths are also protected from --delete, so remote builds and outputs survive.
     rsync -az --delete \
       --exclude .venv/ --exclude build/ --exclude '*.so' --exclude __pycache__/ \
-      --exclude .pytest_cache/ --exclude .ruff_cache/ --exclude 'runs/*' --exclude .slurm_job \
+      --exclude .pytest_cache/ --exclude .ruff_cache/ --include runs/README.md --exclude 'runs/*' \
+      --exclude .slurm_job \
       --exclude bench/results/ --exclude profiling/ --exclude requirements-pace.lock \
       ./ "$host:$dir/"
     ;;
