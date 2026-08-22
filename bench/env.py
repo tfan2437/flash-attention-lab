@@ -47,6 +47,8 @@ def collect_env() -> dict:
         "cuda_runtime": torch.version.cuda,
         "triton": _version("triton"),
         "flash_attn": _version("flash_attn"),
+        # Kernel switches such as FLASH_LAB_FP32_TILE change what is being measured.
+        "flash_lab_env": {k: v for k, v in os.environ.items() if k.startswith("FLASH_LAB_")},
     }
     if torch.cuda.is_available():
         props = torch.cuda.get_device_properties(0)

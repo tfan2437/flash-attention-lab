@@ -1,0 +1,276 @@
+{
+ "schema": 1,
+ "suite": "decode_batch",
+ "kind": "decode",
+ "env": {
+  "date": "2026-08-22T06:38:28+00:00",
+  "host": "atl1-1-03-012-18-0.pace.gatech.edu",
+  "slurm_job": "6072257",
+  "git_sha": "a1cd69ca191448db970e56f5b71aaa22f1a800af",
+  "git_dirty": false,
+  "python": "3.12.12",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "triton": "3.4.0",
+  "flash_attn": "2.8.3.post1",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "compute_capability": "9.0",
+  "sm_count": 132,
+  "mem_gb": 79.2,
+  "driver": "595.71.05",
+  "clocks_mhz": {
+   "sm": "1980",
+   "mem": "2619",
+   "max_sm": "1980",
+   "max_mem": "2619"
+  }
+ },
+ "ceilings": {
+  "fp32_tflops": 67.0,
+  "tensor_tflops": 989.4,
+  "hbm_gbps": 3350.0,
+  "source": "https://www.nvidia.com/en-us/data-center/h100/ (H100 SXM)"
+ },
+ "flush_l2": true,
+ "n_warmup": 10,
+ "n_iters": 200,
+ "seed": 0,
+ "results": [
+  {
+   "config": {
+    "batch": 1,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "flash_attn",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00038827815896824713,
+   "max_err_torch_vs_ref64": 0.005471096841031753,
+   "op_ms": {
+    "median": 0.019039999693632126,
+    "p10": 0.018688000738620758,
+    "p90": 0.01990400068461895,
+    "min": 0.018400000408291817
+   },
+   "bytes": 8404992.0,
+   "gbps": 441.4386625652639,
+   "pct_peak_bw": 13.177273509410862
+  },
+  {
+   "config": {
+    "batch": 1,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_flash",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00038827815896824713,
+   "max_err_torch_vs_ref64": 0.005471096841031753,
+   "op_ms": {
+    "median": 0.019360000267624855,
+    "p10": 0.01897599920630455,
+    "p90": 0.02006400004029274,
+    "min": 0.01865600049495697
+   },
+   "bytes": 8404992.0,
+   "gbps": 434.1421427589242,
+   "pct_peak_bw": 12.959466948027586
+  },
+  {
+   "config": {
+    "batch": 1,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_efficient",
+   "status": "unsupported",
+   "reason": "No available kernel. Aborting execution."
+  },
+  {
+   "config": {
+    "batch": 4,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "flash_attn",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005343792944488834,
+   "max_err_torch_vs_ref64": 0.006222741992048142,
+   "op_ms": {
+    "median": 0.02924799919128418,
+    "p10": 0.02879999950528145,
+    "p90": 0.030239999294281006,
+    "min": 0.028511999174952507
+   },
+   "bytes": 33619968.0,
+   "gbps": 1149.4792440372694,
+   "pct_peak_bw": 34.31281325484386
+  },
+  {
+   "config": {
+    "batch": 4,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_flash",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005343792944488834,
+   "max_err_torch_vs_ref64": 0.006222741992048142,
+   "op_ms": {
+    "median": 0.02953599952161312,
+    "p10": 0.02908799983561039,
+    "p90": 0.030592000111937523,
+    "min": 0.028831999748945236
+   },
+   "bytes": 33619968.0,
+   "gbps": 1138.2708743409348,
+   "pct_peak_bw": 33.97823505495328
+  },
+  {
+   "config": {
+    "batch": 4,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_efficient",
+   "status": "unsupported",
+   "reason": "No available kernel. Aborting execution."
+  },
+  {
+   "config": {
+    "batch": 16,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "flash_attn",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005130055706085157,
+   "max_err_torch_vs_ref64": 0.0066665361662330835,
+   "op_ms": {
+    "median": 0.0660799965262413,
+    "p10": 0.06518399715423584,
+    "p90": 0.06678400188684464,
+    "min": 0.06435199826955795
+   },
+   "bytes": 134479872.0,
+   "gbps": 2035.1071287752889,
+   "pct_peak_bw": 60.74946653060564
+  },
+  {
+   "config": {
+    "batch": 16,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_flash",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005130055706085157,
+   "max_err_torch_vs_ref64": 0.0066665361662330835,
+   "op_ms": {
+    "median": 0.06617599725723267,
+    "p10": 0.06515199691057205,
+    "p90": 0.0674239993095398,
+    "min": 0.06457599997520447
+   },
+   "bytes": 134479872.0,
+   "gbps": 2032.154823103963,
+   "pct_peak_bw": 60.661338003103374
+  },
+  {
+   "config": {
+    "batch": 16,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_efficient",
+   "status": "unsupported",
+   "reason": "No available kernel. Aborting execution."
+  },
+  {
+   "config": {
+    "batch": 64,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "flash_attn",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005817160557635981,
+   "max_err_torch_vs_ref64": 0.008382658638808105,
+   "op_ms": {
+    "median": 0.20572799444198608,
+    "p10": 0.20479999482631683,
+    "p90": 0.2067199945449829,
+    "min": 0.2035840004682541
+   },
+   "bytes": 537919488.0,
+   "gbps": 2614.7121565008483,
+   "pct_peak_bw": 78.05110914927906
+  },
+  {
+   "config": {
+    "batch": 64,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_flash",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005817160557635981,
+   "max_err_torch_vs_ref64": 0.008382658638808105,
+   "op_ms": {
+    "median": 0.21513600647449493,
+    "p10": 0.21420800685882568,
+    "p90": 0.21648000180721283,
+    "min": 0.21350400149822235
+   },
+   "bytes": 537919488.0,
+   "gbps": 2500.369402663297,
+   "pct_peak_bw": 74.63789261681484
+  },
+  {
+   "config": {
+    "batch": 64,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_efficient",
+   "status": "unsupported",
+   "reason": "No available kernel. Aborting execution."
+  }
+ ]
+}

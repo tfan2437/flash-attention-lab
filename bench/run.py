@@ -15,6 +15,7 @@ import math
 import re
 import statistics
 import sys
+import warnings
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -154,7 +155,9 @@ def bench_one(kind, impl, cfg, dtype, causal, args, ceilings) -> dict:
 
     try:
         run, context = make()
-        with context:
+        # SDPA warns at length when a forced backend rejects the input; the status records it.
+        with context, warnings.catch_warnings():
+            warnings.simplefilter("ignore", UserWarning)
             result.update(check(run()))
             if not result.pop("correct"):
                 result["status"] = "incorrect"
