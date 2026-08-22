@@ -24,6 +24,8 @@ export TRITON_CACHE_DIR="${TRITON_CACHE_DIR:-$cache_root/triton}"
 export HF_HOME="${HF_HOME:-$cache_root/huggingface}"
 export TORCH_CUDA_ARCH_LIST="${TORCH_CUDA_ARCH_LIST:-8.0;9.0}"
 export MAX_JOBS="${MAX_JOBS:-${SLURM_CPUS_PER_TASK:-8}}"
+# Lets scripts run by path (profilers, examples) import flash_lab and bench from the checkout.
+export PYTHONPATH="$PWD${PYTHONPATH:+:$PYTHONPATH}"
 
 if [ -f .venv/bin/activate ]; then
   # shellcheck disable=SC1091
