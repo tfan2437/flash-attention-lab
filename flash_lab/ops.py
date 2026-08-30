@@ -10,10 +10,13 @@ from dataclasses import dataclass
 
 import torch
 
+from flash_lab import (
+    triton_attention,  # noqa: F401  (registers attention_triton if Triton is present)
+)
 from flash_lab.layouts import AttnShape, DecodeShape, check_attention_inputs, check_decode_inputs
 
 try:
-    from flash_lab import _C  # noqa: F401  (importing the extension registers the ops)
+    from flash_lab import _C  # noqa: F401  (importing the extension registers the CUDA ops)
 except ImportError as exc:
     HAS_EXTENSION = False
     EXTENSION_ERROR = str(exc)
@@ -63,6 +66,9 @@ PREFILL_IMPLS: dict[str, PrefillImpl] = {
     "mma_pipelined": PrefillImpl(
         op="attention_mma_pipelined", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
     ),
+    "triton": PrefillImpl(
+        op="attention_triton", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
+    ),
     "mma": PrefillImpl(
         op="attention_mma", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
     ),
@@ -74,7 +80,7 @@ DECODE_IMPLS: dict[str, DecodeImpl] = {}
 
 
 def _op_exists(op: str) -> bool:
-    return HAS_EXTENSION and hasattr(torch.ops.flash_lab, op)
+    return hasattr(torch.ops.flash_lab, op)
 
 
 def available_impls() -> dict[str, list[str]]:
@@ -90,8 +96,7 @@ def _select(table: dict, impl: str, device: torch.device, describe: str, reason_
         raise ValueError(f"unknown impl {impl!r}; choose from {['auto', *table]}")
     if device.type != "cuda":
         raise ValueError(f"flash_lab kernels take CUDA tensors, got device {device}")
-    if not HAS_EXTENSION:
-        raise RuntimeError(f"flash_lab was built without its CUDA extension: {EXTENSION_ERROR}")
+    missing = "" if HAS_EXTENSION else f" (the CUDA extension did not load: {EXTENSION_ERROR})"
 
     if impl != "auto":
         spec = table[impl]
@@ -99,12 +104,12 @@ def _select(table: dict, impl: str, device: torch.device, describe: str, reason_
         if reason is not None:
             raise ValueError(f"impl {impl!r} cannot run {describe}: {reason}")
         if not _op_exists(spec.op):
-            raise RuntimeError(f"impl {impl!r} is not compiled into this build")
+            raise RuntimeError(f"impl {impl!r} is not available in this build{missing}")
         return spec
     for spec in table.values():
         if reason_of(spec) is None and _op_exists(spec.op):
             return spec
-    raise ValueError(f"no compiled implementation supports {describe}")
+    raise ValueError(f"no available implementation supports {describe}{missing}")
 
 
 def attention(

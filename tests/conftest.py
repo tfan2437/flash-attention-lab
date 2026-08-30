@@ -1,7 +1,13 @@
+import os
+
 import pytest
 import torch
 
-from flash_lab import ops
+# One fixed Triton configuration unless a test asks for autotuning; otherwise every new shape
+# would compile all candidates (tests/test_triton.py covers the autotuned path).
+os.environ.setdefault("FLASH_LAB_TRITON_AUTOTUNE", "0")
+
+from flash_lab import ops  # noqa: E402
 
 
 def pytest_collection_modifyitems(config, items):

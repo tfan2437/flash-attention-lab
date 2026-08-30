@@ -26,6 +26,8 @@ IMPLS = [
     ("mma", torch.float16),
     ("mma_pipelined", torch.bfloat16),
     ("mma_pipelined", torch.float16),
+    ("triton", torch.bfloat16),
+    ("triton", torch.float16),
 ]
 
 SHAPES = [
