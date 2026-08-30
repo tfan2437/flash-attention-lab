@@ -5,7 +5,8 @@
 #
 # Usage: scripts/pace/gpu.sh scripts/pace/ncu.sh <name> <kernel regex> <python args...>
 #   scripts/pace/ncu.sh mma-s4096 mma_attention -m bench.run --suite prefill_bf16 \
-#       --impls mma --configs 1 --causal false --n-iters 12 --allow-dirty
+#       --impls mma --configs 1 --causal false --n-iters 12 --out-dir runs/bench
+# Timings taken under the profiler are not results, hence --out-dir runs/bench for bench.run.
 # NCU_SKIP (default 10) launches of the matching kernel are skipped first, so the profiled launch
 # is a warm one.
 set -euo pipefail
