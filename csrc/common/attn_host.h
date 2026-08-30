@@ -41,6 +41,13 @@ inline void check_attention_inputs(const at::Tensor& q, const at::Tensor& k, con
   TORCH_CHECK(q.size(0) * q.size(2) <= 65535, "batch * heads must be at most 65535");
 }
 
+// The tensor-core kernels move 16 bytes at a time, so every row must start on a 16-byte boundary.
+inline void check_16_byte_rows(const at::Tensor& x, const char* name) {
+  bool aligned = reinterpret_cast<uintptr_t>(x.data_ptr()) % 16 == 0;
+  for (int dim = 0; dim < 3; ++dim) aligned &= x.size(dim) == 1 || x.stride(dim) % 8 == 0;
+  TORCH_CHECK(aligned, name, " must have 16-byte aligned rows (data pointer and strides)");
+}
+
 // o is [B, S_q, H, D] contiguous in the input dtype; lse is [B, H, S_q] fp32.
 inline std::tuple<at::Tensor, at::Tensor> alloc_attention_outputs(const at::Tensor& q) {
   at::Tensor o = at::empty(q.sizes(), q.options());

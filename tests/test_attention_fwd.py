@@ -24,6 +24,8 @@ IMPLS = [
     ("fp32_fused", torch.float32),
     ("mma", torch.bfloat16),
     ("mma", torch.float16),
+    ("mma_pipelined", torch.bfloat16),
+    ("mma_pipelined", torch.float16),
 ]
 
 SHAPES = [

@@ -37,6 +37,7 @@ D = DecodeConfig
 
 PREFILL_BF16_IMPLS = (
     "mma",
+    "mma_pipelined",
     "triton",
     "sdpa_flash",
     "sdpa_cudnn",

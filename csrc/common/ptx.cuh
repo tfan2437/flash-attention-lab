@@ -42,6 +42,22 @@ __device__ __forceinline__ void ldmatrix_x4_trans(uint32_t (&r)[4], const void* 
                : "r"(smem_addr(row_ptr)));
 }
 
+// Asynchronous 16-byte global-to-shared copy that bypasses L1. With valid == false nothing is
+// read and the destination is zero-filled (src-size 0), so out-of-range rows need no branch.
+__device__ __forceinline__ void cp_async_16(void* smem_ptr, const void* gmem_ptr, bool valid) {
+  const int src_bytes = valid ? 16 : 0;
+  asm volatile("cp.async.cg.shared.global [%0], [%1], 16, %2;\n" ::"r"(smem_addr(smem_ptr)),
+               "l"(gmem_ptr), "r"(src_bytes));
+}
+
+__device__ __forceinline__ void cp_async_commit() { asm volatile("cp.async.commit_group;\n" ::); }
+
+// Waits until at most `kPending` committed groups of this thread are still in flight.
+template <int kPending>
+__device__ __forceinline__ void cp_async_wait() {
+  asm volatile("cp.async.wait_group %0;\n" ::"n"(kPending) : "memory");
+}
+
 // d += a * b on a 16x8x16 tile with fp32 accumulation. T is __nv_bfloat16 or __half.
 template <typename T>
 __device__ __forceinline__ void mma_16816(float (&d)[4], const uint32_t (&a)[4], uint32_t b0,

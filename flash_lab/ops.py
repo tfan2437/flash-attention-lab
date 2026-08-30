@@ -60,6 +60,9 @@ class DecodeImpl:
 
 
 PREFILL_IMPLS: dict[str, PrefillImpl] = {
+    "mma_pipelined": PrefillImpl(
+        op="attention_mma_pipelined", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
+    ),
     "mma": PrefillImpl(
         op="attention_mma", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
     ),

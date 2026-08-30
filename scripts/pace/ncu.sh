@@ -13,7 +13,7 @@ cd "$(dirname "$0")/../.."
 source scripts/pace/env.sh
 source scripts/pace/common.sh
 
-name="$1"
+report="$1"
 regex="$2"
 shift 2
 gpu="$(python -c 'import torch; from bench.run import gpu_slug; print(gpu_slug(torch.cuda.get_device_name()))')"
@@ -22,13 +22,14 @@ mkdir -p "$out_dir"
 
 profile() {
   ncu --set full --import-source yes --kernel-name "regex:$regex" --launch-skip "${NCU_SKIP:-10}" \
-    --launch-count 1 --force-overwrite --export "$RUN_DIR/$name" python "$@"
-  ncu --import "$RUN_DIR/$name.ncu-rep" --page raw --csv >"$out_dir/$name.csv"
-  python scripts/pace/ncu_digest.py "$out_dir/$name.csv" >"$out_dir/$name.md"
-  cat "$out_dir/$name.md"
-  if [ "$(stat -c %s "$RUN_DIR/$name.ncu-rep")" -lt 5000000 ]; then
-    cp "$RUN_DIR/$name.ncu-rep" "$out_dir/"
+    --launch-count 1 --force-overwrite --export "$RUN_DIR/$report" python "$@"
+  ncu --import "$RUN_DIR/$report.ncu-rep" --page raw --csv >"$out_dir/$report.csv"
+  python scripts/pace/ncu_digest.py "$out_dir/$report.csv" >"$out_dir/$report.md"
+  cat "$out_dir/$report.md"
+  if [ "$(stat -c %s "$RUN_DIR/$report.ncu-rep")" -lt 5000000 ]; then
+    cp "$RUN_DIR/$report.ncu-rep" "$out_dir/"
   fi
 }
 
-run_logged "ncu-$name" profile "$@"
+# `report`, not `name`: run_logged has a local `name` that bash would let profile() see.
+run_logged "ncu-$report" profile "$@"
