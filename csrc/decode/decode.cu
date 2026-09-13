@@ -24,6 +24,7 @@
 #include <torch/library.h>
 
 #include <cmath>
+#include <cstdlib>
 
 #include "decode/decode_host.h"
 
@@ -249,21 +250,30 @@ void launch_for_heads(const DecodeParams& p, int k_heads, cudaStream_t stream) {
 }
 
 // Query heads per block: the largest power of two that divides the GQA group, capped so the
-// per-lane copy of the queries stays at 64 registers.
+// per-lane copy of the queries stays at 64 registers. FLASH_LAB_DECODE_HEADS_PER_BLOCK=1|2|4|8
+// overrides it for experiments (it must divide the group).
 int heads_per_block(int group, int head_dim) {
   const int limit = head_dim == 128 ? 4 : 8;
+  if (const char* env = std::getenv("FLASH_LAB_DECODE_HEADS_PER_BLOCK")) {
+    const int k = std::atoi(env);
+    TORCH_CHECK(k >= 1 && k <= limit && group % k == 0 && (k & (k - 1)) == 0,
+                "FLASH_LAB_DECODE_HEADS_PER_BLOCK=", env, " does not fit group ", group);
+    return k;
+  }
   int k = 1;
   while (k * 2 <= limit && group % (k * 2) == 0) k *= 2;
   return k;
 }
 
-// Smallest power of two that gives at least two blocks per SM while keeping >= 256 keys per
-// split of the longest possible sequence.
+// Smallest power of two that gives about 16 blocks per SM, so enough warps are resident to keep
+// many loads in flight, while keeping >= 256 keys per split of the longest possible sequence.
+// (Two blocks per SM, the first version, left H100 at 47-50% of HBM bandwidth at 32K context;
+// a sweep put the best split counts near this target.)
 int choose_num_splits(const DecodeParams& p, int k_heads) {
   const int sm_count = at::cuda::getCurrentDeviceProperties()->multiProcessorCount;
   const int blocks = p.batch * (p.heads / k_heads);
   int splits = 1;
-  while (splits < 64 && blocks * splits < 2 * sm_count && p.max_seqlen / (2 * splits) >= 256) {
+  while (splits < 64 && blocks * splits < 16 * sm_count && p.max_seqlen / (2 * splits) >= 256) {
     splits *= 2;
   }
   return splits;

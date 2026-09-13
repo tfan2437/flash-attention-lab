@@ -72,7 +72,14 @@ def prefill_runner(impl, q, k, v, causal, scale):
 
 
 def decode_runner(impl, q, k_cache, v_cache, seq_lens, scale):
-    """q is [B, 1, H, D]; every sequence uses all S_max rows of its contiguous cache."""
+    """q is [B, 1, H, D]; every sequence uses all S_max rows of its contiguous cache.
+
+    `splitkv@N` runs the split-KV kernel with a fixed N splits instead of its heuristic.
+    """
+    num_splits = None
+    if "@" in impl:
+        impl, splits = impl.split("@")
+        num_splits = int(splits)
     if impl in SDPA_BACKENDS:
         return _sdpa(SDPA_BACKENDS[impl], q, k_cache, v_cache, False, scale)
     if impl == "flash_attn":
@@ -87,7 +94,9 @@ def decode_runner(impl, q, k_cache, v_cache, seq_lens, scale):
         if impl not in flash_lab.available_impls()["decode"]:
             raise Unsupported(f"{impl} is not compiled into this build")
         return (
-            lambda: flash_lab.decode(q, k_cache, v_cache, seq_lens, softmax_scale=scale, impl=impl),
+            lambda: flash_lab.decode(
+                q, k_cache, v_cache, seq_lens, softmax_scale=scale, impl=impl, num_splits=num_splits
+            ),
             contextlib.nullcontext(),
         )
     raise Unsupported(f"unknown decode impl {impl!r}")
