@@ -51,6 +51,7 @@ class DecodeImpl:
     dtypes: tuple[torch.dtype, ...]
     head_dims: tuple[int, ...]
     paged: bool = False
+    in_auto: bool = True  # False for baselines kept for comparison only
 
     def unsupported_reason(self, shape: DecodeShape, dtype: torch.dtype) -> str | None:
         if dtype not in self.dtypes:
@@ -76,7 +77,14 @@ PREFILL_IMPLS: dict[str, PrefillImpl] = {
         op="attention_fp32_fused", dtypes=(torch.float32,), head_dims=(64, 128)
     ),
 }
-DECODE_IMPLS: dict[str, DecodeImpl] = {}
+_DECODE_DTYPES = (torch.bfloat16, torch.float16, torch.float32)
+DECODE_IMPLS: dict[str, DecodeImpl] = {
+    "splitkv": DecodeImpl(op="decode_splitkv", dtypes=_DECODE_DTYPES, head_dims=(64, 128)),
+    "decode_inplace": DecodeImpl(op="decode_inplace", dtypes=_DECODE_DTYPES, head_dims=(64, 128)),
+    "decode_copy": DecodeImpl(
+        op="decode_copy", dtypes=_DECODE_DTYPES, head_dims=(64, 128), in_auto=False
+    ),
+}
 
 
 def _op_exists(op: str) -> bool:
@@ -107,7 +115,7 @@ def _select(table: dict, impl: str, device: torch.device, describe: str, reason_
             raise RuntimeError(f"impl {impl!r} is not available in this build{missing}")
         return spec
     for spec in table.values():
-        if reason_of(spec) is None and _op_exists(spec.op):
+        if getattr(spec, "in_auto", True) and reason_of(spec) is None and _op_exists(spec.op):
             return spec
     raise ValueError(f"no available implementation supports {describe}{missing}")
 
@@ -173,7 +181,7 @@ def decode(
         DECODE_IMPLS, impl, q.device, describe, lambda s: s.unsupported_reason(shape, q.dtype)
     )
     out, lse = getattr(torch.ops.flash_lab, spec.op)(
-        q3, k_cache, v_cache, seq_lens, block_tables, scale, num_splits or 0
+        q3, k_cache, v_cache, seq_lens, scale, num_splits or 0
     )
     if q.dim() == 4:
         out = out.unsqueeze(1)

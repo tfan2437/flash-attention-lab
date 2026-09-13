@@ -44,7 +44,14 @@ PREFILL_BF16_IMPLS = (
     "sdpa_efficient",
     "flash_attn",
 )
-DECODE_IMPLS = ("splitkv", "flash_attn", "sdpa_flash", "sdpa_efficient")
+DECODE_IMPLS = (
+    "decode_copy",
+    "decode_inplace",
+    "splitkv",
+    "flash_attn",
+    "sdpa_flash",
+    "sdpa_efficient",
+)
 
 SUITES = {
     "prefill_fp32": Suite(
