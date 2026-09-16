@@ -1,0 +1,4 @@
+Time (%),Total Time (ns),Instances,Avg (ns),Med (ns),Min (ns),Max (ns),StdDev (ns),Style,Range
+65.1,63275591,20,3163779.6,3160985.0,3151893,3213506,13683.8,PushPop,:decode_copy:step
+25.4,24651014,20,1232550.7,1231264.0,1224954,1242818,4829.1,PushPop,:decode_inplace:step
+9.5,9236749,20,461837.5,461167.5,459322,466405,1956.7,PushPop,:splitkv:step

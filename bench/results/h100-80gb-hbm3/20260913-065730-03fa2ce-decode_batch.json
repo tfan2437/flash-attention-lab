@@ -1,0 +1,554 @@
+{
+ "schema": 1,
+ "suite": "decode_batch",
+ "kind": "decode",
+ "env": {
+  "date": "2026-09-13T06:57:27+00:00",
+  "host": "atl1-1-03-012-18-0.pace.gatech.edu",
+  "slurm_job": "6082606",
+  "git_sha": "03fa2ce142580909606df8beed7df32d2d02cf94",
+  "git_dirty": false,
+  "python": "3.12.12",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "triton": "3.4.0",
+  "flash_attn": "2.8.3.post1",
+  "flash_lab_env": {},
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "compute_capability": "9.0",
+  "sm_count": 132,
+  "mem_gb": 79.2,
+  "driver": "595.71.05",
+  "clocks_mhz": {
+   "sm": "345",
+   "mem": "2619",
+   "max_sm": "1980",
+   "max_mem": "2619"
+  }
+ },
+ "ceilings": {
+  "fp32_tflops": 67.0,
+  "tensor_tflops": 989.4,
+  "hbm_gbps": 3350.0,
+  "source": "https://www.nvidia.com/en-us/data-center/h100/ (H100 SXM)"
+ },
+ "flush_l2": true,
+ "n_warmup": 10,
+ "n_iters": 200,
+ "seed": 0,
+ "tag": null,
+ "results": [
+  {
+   "config": {
+    "batch": 1,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "decode_copy",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00038827815896824713,
+   "max_err_torch_vs_ref64": 0.005471096841031753,
+   "op_ms": {
+    "median": 0.2983520030975342,
+    "p10": 0.2948800027370453,
+    "p90": 0.30268800258636475,
+    "min": 0.2919360101222992
+   },
+   "bytes": 8404992.0,
+   "gbps": 28.171394569964818,
+   "pct_peak_bw": 0.8409371513422333
+  },
+  {
+   "config": {
+    "batch": 1,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "decode_inplace",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00038827815896824713,
+   "max_err_torch_vs_ref64": 0.005471096841031753,
+   "op_ms": {
+    "median": 0.3134720027446747,
+    "p10": 0.3126400113105774,
+    "p90": 0.3144319951534271,
+    "min": 0.31139200925827026
+   },
+   "bytes": 8404992.0,
+   "gbps": 26.812576327098434,
+   "pct_peak_bw": 0.8003754127492069
+  },
+  {
+   "config": {
+    "batch": 1,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "splitkv",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00038827815896824713,
+   "max_err_torch_vs_ref64": 0.005471096841031753,
+   "op_ms": {
+    "median": 0.05185599997639656,
+    "p10": 0.05116799846291542,
+    "p90": 0.05276799947023392,
+    "min": 0.050655998289585114
+   },
+   "bytes": 8404992.0,
+   "gbps": 162.08330769488052,
+   "pct_peak_bw": 4.838307692384493
+  },
+  {
+   "config": {
+    "batch": 1,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "flash_attn",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00038827815896824713,
+   "max_err_torch_vs_ref64": 0.005471096841031753,
+   "op_ms": {
+    "median": 0.019007999449968338,
+    "p10": 0.018559999763965607,
+    "p90": 0.019967999309301376,
+    "min": 0.01817600056529045
+   },
+   "bytes": 8404992.0,
+   "gbps": 442.18183097716786,
+   "pct_peak_bw": 13.199457641109488
+  },
+  {
+   "config": {
+    "batch": 1,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_flash",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00038827815896824713,
+   "max_err_torch_vs_ref64": 0.005471096841031753,
+   "op_ms": {
+    "median": 0.019007999449968338,
+    "p10": 0.018592000007629395,
+    "p90": 0.02022399939596653,
+    "min": 0.01833599992096424
+   },
+   "bytes": 8404992.0,
+   "gbps": 442.18183097716786,
+   "pct_peak_bw": 13.199457641109488
+  },
+  {
+   "config": {
+    "batch": 1,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_efficient",
+   "status": "unsupported",
+   "reason": "No available kernel. Aborting execution."
+  },
+  {
+   "config": {
+    "batch": 4,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "decode_copy",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0004593565967363489,
+   "max_err_torch_vs_ref64": 0.006222741992048142,
+   "op_ms": {
+    "median": 0.4527200013399124,
+    "p10": 0.4490880072116852,
+    "p90": 0.4564799964427948,
+    "min": 0.4466240108013153
+   },
+   "bytes": 33619968.0,
+   "gbps": 74.26216624071215,
+   "pct_peak_bw": 2.216781081812303
+  },
+  {
+   "config": {
+    "batch": 4,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "decode_inplace",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0004593565967363489,
+   "max_err_torch_vs_ref64": 0.006222741992048142,
+   "op_ms": {
+    "median": 0.32095998525619507,
+    "p10": 0.3200640082359314,
+    "p90": 0.3218879997730255,
+    "min": 0.3192319869995117
+   },
+   "bytes": 33619968.0,
+   "gbps": 104.74816034517212,
+   "pct_peak_bw": 3.1268107565723025
+  },
+  {
+   "config": {
+    "batch": 4,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "splitkv",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0004593565967363489,
+   "max_err_torch_vs_ref64": 0.006222741992048142,
+   "op_ms": {
+    "median": 0.05907199904322624,
+    "p10": 0.05827200040221214,
+    "p90": 0.06003199890255928,
+    "min": 0.05753599852323532
+   },
+   "bytes": 33619968.0,
+   "gbps": 569.1354371704674,
+   "pct_peak_bw": 16.98911752747664
+  },
+  {
+   "config": {
+    "batch": 4,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "flash_attn",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005343792944488834,
+   "max_err_torch_vs_ref64": 0.006222741992048142,
+   "op_ms": {
+    "median": 0.029023999348282814,
+    "p10": 0.028511999174952507,
+    "p90": 0.03014400042593479,
+    "min": 0.02816000021994114
+   },
+   "bytes": 33619968.0,
+   "gbps": 1158.3506324048035,
+   "pct_peak_bw": 34.577630818053834
+  },
+  {
+   "config": {
+    "batch": 4,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_flash",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005343792944488834,
+   "max_err_torch_vs_ref64": 0.006222741992048142,
+   "op_ms": {
+    "median": 0.02932799980044365,
+    "p10": 0.028896000236272812,
+    "p90": 0.030400000512599945,
+    "min": 0.028511999174952507
+   },
+   "bytes": 33619968.0,
+   "gbps": 1146.3437066543975,
+   "pct_peak_bw": 34.21921512401187
+  },
+  {
+   "config": {
+    "batch": 4,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_efficient",
+   "status": "unsupported",
+   "reason": "No available kernel. Aborting execution."
+  },
+  {
+   "config": {
+    "batch": 16,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "decode_copy",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0004771444960753879,
+   "max_err_torch_vs_ref64": 0.0066665361662330835,
+   "op_ms": {
+    "median": 0.6494880020618439,
+    "p10": 0.6444479823112488,
+    "p90": 0.6531519889831543,
+    "min": 0.6416320204734802
+   },
+   "bytes": 134479872.0,
+   "gbps": 207.055205905397,
+   "pct_peak_bw": 6.180752415086478
+  },
+  {
+   "config": {
+    "batch": 16,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "decode_inplace",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0004771444960753879,
+   "max_err_torch_vs_ref64": 0.0066665361662330835,
+   "op_ms": {
+    "median": 0.32521599531173706,
+    "p10": 0.3242560029029846,
+    "p90": 0.32607999444007874,
+    "min": 0.3232960104942322
+   },
+   "bytes": 134479872.0,
+   "gbps": 413.509402792731,
+   "pct_peak_bw": 12.343564262469581
+  },
+  {
+   "config": {
+    "batch": 16,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "splitkv",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0004771444960753879,
+   "max_err_torch_vs_ref64": 0.0066665361662330835,
+   "op_ms": {
+    "median": 0.1807039976119995,
+    "p10": 0.179967999458313,
+    "p90": 0.18185600638389587,
+    "min": 0.17929600179195404
+   },
+   "bytes": 134479872.0,
+   "gbps": 744.1997619153389,
+   "pct_peak_bw": 22.21491826612952
+  },
+  {
+   "config": {
+    "batch": 16,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "flash_attn",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005130055706085157,
+   "max_err_torch_vs_ref64": 0.0066665361662330835,
+   "op_ms": {
+    "median": 0.06595200300216675,
+    "p10": 0.06505600363016129,
+    "p90": 0.06659200042486191,
+    "min": 0.06451199948787689
+   },
+   "bytes": 134479872.0,
+   "gbps": 2039.0566757401118,
+   "pct_peak_bw": 60.86736345492871
+  },
+  {
+   "config": {
+    "batch": 16,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_flash",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005130055706085157,
+   "max_err_torch_vs_ref64": 0.0066665361662330835,
+   "op_ms": {
+    "median": 0.06611199676990509,
+    "p10": 0.06486400216817856,
+    "p90": 0.06771200150251389,
+    "min": 0.06441599875688553
+   },
+   "bytes": 134479872.0,
+   "gbps": 2034.1220742135672,
+   "pct_peak_bw": 60.7200619168229
+  },
+  {
+   "config": {
+    "batch": 16,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_efficient",
+   "status": "unsupported",
+   "reason": "No available kernel. Aborting execution."
+  },
+  {
+   "config": {
+    "batch": 64,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "decode_copy",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00048593712494415797,
+   "max_err_torch_vs_ref64": 0.008382658638808105,
+   "op_ms": {
+    "median": 2.3329920768737793,
+    "p10": 2.3201279640197754,
+    "p90": 2.3430399894714355,
+    "min": 2.300287961959839
+   },
+   "bytes": 537919488.0,
+   "gbps": 230.57064502371338,
+   "pct_peak_bw": 6.882705821603384
+  },
+  {
+   "config": {
+    "batch": 64,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "decode_inplace",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00048593712494415797,
+   "max_err_torch_vs_ref64": 0.008382658638808105,
+   "op_ms": {
+    "median": 0.6457599997520447,
+    "p10": 0.6446080207824707,
+    "p90": 0.647104024887085,
+    "min": 0.643231987953186
+   },
+   "bytes": 537919488.0,
+   "gbps": 833.002180696462,
+   "pct_peak_bw": 24.865736737207822
+  },
+  {
+   "config": {
+    "batch": 64,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "splitkv",
+   "status": "ok",
+   "max_err_vs_ref64": 0.00048593712494415797,
+   "max_err_torch_vs_ref64": 0.008382658638808105,
+   "op_ms": {
+    "median": 0.6456000208854675,
+    "p10": 0.6441919803619385,
+    "p90": 0.6467840075492859,
+    "min": 0.6434879899024963
+   },
+   "bytes": 537919488.0,
+   "gbps": 833.208597580621,
+   "pct_peak_bw": 24.871898435242418
+  },
+  {
+   "config": {
+    "batch": 64,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "flash_attn",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005817160557635981,
+   "max_err_torch_vs_ref64": 0.008382658638808105,
+   "op_ms": {
+    "median": 0.20771199464797974,
+    "p10": 0.2069759964942932,
+    "p90": 0.2085759937763214,
+    "min": 0.20640000700950623
+   },
+   "bytes": 537919488.0,
+   "gbps": 2589.737241277953,
+   "pct_peak_bw": 77.3055892918792
+  },
+  {
+   "config": {
+    "batch": 64,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_flash",
+   "status": "ok",
+   "max_err_vs_ref64": 0.0005817160557635981,
+   "max_err_torch_vs_ref64": 0.008382658638808105,
+   "op_ms": {
+    "median": 0.21782399713993073,
+    "p10": 0.21699200570583344,
+    "p90": 0.21875199675559998,
+    "min": 0.21648000180721283
+   },
+   "bytes": 537919488.0,
+   "gbps": 2469.514355915703,
+   "pct_peak_bw": 73.71684644524487
+  },
+  {
+   "config": {
+    "batch": 64,
+    "heads": 32,
+    "heads_kv": 8,
+    "context": 2048,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+   },
+   "impl": "sdpa_efficient",
+   "status": "unsupported",
+   "reason": "No available kernel. Aborting execution."
+  }
+ ]
+}
