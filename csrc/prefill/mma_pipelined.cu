@@ -112,8 +112,8 @@ __global__ void __launch_bounds__(kThreads) mma_pipelined_kernel(const AttnParam
     tile_scores<T, D>(s, q_frag, k_slot(tile % 2), lane);
     const bool needs_mask =
         k0 + kBlockN > p.seqlen_k || (p.causal && k0 + kBlockN - 1 > warp_row0 + p.causal_offset);
-    scale_and_mask(s, p, needs_mask, warp_row0, k0, lane);
-    online_softmax<D>(s, o_acc, row_max, row_sum);
+    mask_scores(s, p, needs_mask, warp_row0, k0, lane);
+    online_softmax<D>(s, o_acc, row_max, row_sum, p.scale_log2);
     accumulate_pv<T, D>(o_acc, s, v_slot(tile % 2), lane);
     __syncthreads();  // this stage is refilled two tiles from now
   }

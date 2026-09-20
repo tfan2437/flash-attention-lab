@@ -45,8 +45,10 @@ __device__ __forceinline__ void load_tile(T* smem, const T* src, int64_t row_str
   }
 }
 
+// Three blocks per SM: loads are synchronous here, so resident warps are the only latency
+// hiding, and the bound keeps registers at or under 168 (172 unbounded at D = 128 cost a block).
 template <typename T, int D>
-__global__ void __launch_bounds__(kThreads) mma_attention_kernel(const AttnParams p) {
+__global__ void __launch_bounds__(kThreads, 3) mma_attention_kernel(const AttnParams p) {
   __shared__ alignas(16) T smem[2 * kBlockN * kStride<D>];
   T* k_smem = smem;
   T* v_smem = smem + kBlockN * kStride<D>;
@@ -89,8 +91,8 @@ __global__ void __launch_bounds__(kThreads) mma_attention_kernel(const AttnParam
     tile_scores<T, D>(s, q_frag, k_smem, lane);
     const bool needs_mask =
         keys_valid < kBlockN || (p.causal && k0 + kBlockN - 1 > warp_row0 + p.causal_offset);
-    scale_and_mask(s, p, needs_mask, warp_row0, k0, lane);
-    online_softmax<D>(s, o_acc, row_max, row_sum);
+    mask_scores(s, p, needs_mask, warp_row0, k0, lane);
+    online_softmax<D>(s, o_acc, row_max, row_sum, p.scale_log2);
     accumulate_pv<T, D>(o_acc, s, v_smem, lane);
   }
 

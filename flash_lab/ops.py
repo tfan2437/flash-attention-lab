@@ -141,6 +141,8 @@ def attention(
     """
     shape = check_attention_inputs(q, k, v)
     scale = softmax_scale if softmax_scale is not None else 1.0 / math.sqrt(shape.head_dim)
+    if not scale > 0:
+        raise ValueError(f"softmax_scale must be positive, got {scale}")
     describe = (
         f"dtype={q.dtype}, head_dim={shape.head_dim}, heads={shape.heads}/{shape.heads_kv}, "
         f"S_q={shape.seqlen_q}, S_k={shape.seqlen_k}, causal={causal}"

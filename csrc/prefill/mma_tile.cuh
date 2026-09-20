@@ -54,31 +54,33 @@ __device__ __forceinline__ void tile_scores(float (&s)[8][4], const uint32_t (&q
   }
 }
 
-// Scales the scores into the log2 domain and hides keys past the end or above the causal
-// diagonal. `needs_mask` is warp-uniform, so tiles away from the edges skip the index math.
-__device__ __forceinline__ void scale_and_mask(float (&s)[8][4], const AttnParams& p,
-                                               bool needs_mask, int warp_row0, int k0, int lane) {
+// Hides keys past the end or above the causal diagonal. Scores stay unscaled: the softmax scale
+// is folded into the exponent below. `needs_mask` is warp-uniform, so tiles away from the edges
+// skip the index math.
+__device__ __forceinline__ void mask_scores(float (&s)[8][4], const AttnParams& p, bool needs_mask,
+                                            int warp_row0, int k0, int lane) {
+  if (!needs_mask) return;
   const int g = lane / 4;
   const int t = lane % 4;
 #pragma unroll
   for (int j = 0; j < 8; ++j) {
 #pragma unroll
     for (int e = 0; e < 4; ++e) {
-      s[j][e] *= p.scale_log2;
-      if (needs_mask) {
-        const int row = warp_row0 + g + (e >= 2 ? 8 : 0);
-        const int col = k0 + 8 * j + 2 * t + (e & 1);
-        if (col >= p.seqlen_k || (p.causal && col > row + p.causal_offset)) s[j][e] = -INFINITY;
-      }
+      const int row = warp_row0 + g + (e >= 2 ? 8 : 0);
+      const int col = k0 + 8 * j + 2 * t + (e & 1);
+      if (col >= p.seqlen_k || (p.causal && col > row + p.causal_offset)) s[j][e] = -INFINITY;
     }
   }
 }
 
-// Online softmax on the accumulator fragments: updates the running max and this lane's partial
-// sums for rows g and g + 8, turns s into probabilities, and rescales the output accumulator.
+// Online softmax on the accumulator fragments: updates the running max (of unscaled scores) and
+// this lane's partial sums for rows g and g + 8, turns s into probabilities, and rescales the
+// output accumulator. With a positive scale, max(scale * s) = scale * max(s), so the max is taken
+// on raw scores and each probability costs one FFMA plus exp2: 2^(s * scale_log2 - ref).
 template <int D>
 __device__ __forceinline__ void online_softmax(float (&s)[8][4], float (&o_acc)[D / 8][4],
-                                               float (&row_max)[2], float (&row_sum)[2]) {
+                                               float (&row_max)[2], float (&row_sum)[2],
+                                               float scale_log2) {
   float tile_max[2] = {-INFINITY, -INFINITY};
 #pragma unroll
   for (int j = 0; j < 8; ++j) {
@@ -95,17 +97,17 @@ __device__ __forceinline__ void online_softmax(float (&s)[8][4], float (&o_acc)[
     const float new_max = fmaxf(row_max[i], tile_max[i]);
     // A row that has only seen masked keys keeps a max of -inf; 0 as the reference point makes
     // its exponentials exactly 0 instead of nan.
-    ref[i] = new_max == -INFINITY ? 0.f : new_max;
-    rescale[i] = exp2f(row_max[i] - ref[i]);
+    ref[i] = new_max == -INFINITY ? 0.f : new_max * scale_log2;
+    rescale[i] = exp2f(fmaf(row_max[i], scale_log2, -ref[i]));
     row_max[i] = new_max;
   }
   float tile_sum[2] = {0.f, 0.f};
 #pragma unroll
   for (int j = 0; j < 8; ++j) {
-    s[j][0] = exp2f(s[j][0] - ref[0]);
-    s[j][1] = exp2f(s[j][1] - ref[0]);
-    s[j][2] = exp2f(s[j][2] - ref[1]);
-    s[j][3] = exp2f(s[j][3] - ref[1]);
+    s[j][0] = exp2f(fmaf(s[j][0], scale_log2, -ref[0]));
+    s[j][1] = exp2f(fmaf(s[j][1], scale_log2, -ref[0]));
+    s[j][2] = exp2f(fmaf(s[j][2], scale_log2, -ref[1]));
+    s[j][3] = exp2f(fmaf(s[j][3], scale_log2, -ref[1]));
     tile_sum[0] += s[j][0] + s[j][1];
     tile_sum[1] += s[j][2] + s[j][3];
   }
@@ -156,7 +158,8 @@ __device__ __forceinline__ void finish_rows(float (&row_sum)[2], float (&inv)[2]
   }
 }
 
-// Natural-log LSE of rows g and g + 8, written by the first lane of each quad.
+// Natural-log LSE of rows g and g + 8, written by the first lane of each quad. row_max holds
+// unscaled scores, so the scale is applied here.
 __device__ __forceinline__ void store_lse(const AttnParams& p, int b, int h, int warp_row0,
                                           int lane, const float (&row_max)[2],
                                           const float (&row_sum)[2]) {
@@ -166,8 +169,7 @@ __device__ __forceinline__ void store_lse(const AttnParams& p, int b, int h, int
     const int row = warp_row0 + lane / 4 + 8 * i;
     if (row >= p.seqlen_q) continue;
     const int64_t index = (static_cast<int64_t>(b) * p.heads + h) * p.seqlen_q + row;
-    p.lse[index] =
-        row_sum[i] > 0.f ? row_max[i] * static_cast<float>(M_LN2) + logf(row_sum[i]) : -INFINITY;
+    p.lse[index] = row_sum[i] > 0.f ? row_max[i] * p.scale + logf(row_sum[i]) : -INFINITY;
   }
 }
 
