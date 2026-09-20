@@ -73,9 +73,13 @@ PREFILL_IMPLS: dict[str, PrefillImpl] = {
     "mma": PrefillImpl(
         op="attention_mma", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
     ),
+    "fp32_regtile": PrefillImpl(
+        op="attention_fp32_regtile", dtypes=(torch.float32,), head_dims=(64, 128)
+    ),
     "fp32_fused": PrefillImpl(
         op="attention_fp32_fused", dtypes=(torch.float32,), head_dims=(64, 128)
     ),
+    "naive": PrefillImpl(op="attention_naive", dtypes=(torch.float32,), head_dims=(64, 128)),
 }
 _DECODE_DTYPES = (torch.bfloat16, torch.float16, torch.float32)
 DECODE_IMPLS: dict[str, DecodeImpl] = {

@@ -58,7 +58,7 @@ SUITES = {
         kind="prefill",
         configs=(P(4, 32, 32, 1024, 128), P(4, 32, 32, 4096, 128), P(2, 16, 16, 2048, 64)),
         dtypes=("fp32",),
-        impls=("fp32_fused", "sdpa_math", "sdpa_efficient"),
+        impls=("naive", "fp32_fused", "fp32_regtile", "sdpa_math", "sdpa_efficient"),
     ),
     "prefill_bf16": Suite(
         kind="prefill",

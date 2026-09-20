@@ -41,10 +41,11 @@ inline void check_attention_inputs(const at::Tensor& q, const at::Tensor& k, con
   TORCH_CHECK(q.size(0) * q.size(2) <= 65535, "batch * heads must be at most 65535");
 }
 
-// The tensor-core kernels move 16 bytes at a time, so every row must start on a 16-byte boundary.
+// Kernels that move 16 bytes at a time need every row to start on a 16-byte boundary.
 inline void check_16_byte_rows(const at::Tensor& x, const char* name) {
+  const int64_t elems = 16 / x.element_size();
   bool aligned = reinterpret_cast<uintptr_t>(x.data_ptr()) % 16 == 0;
-  for (int dim = 0; dim < 3; ++dim) aligned &= x.size(dim) == 1 || x.stride(dim) % 8 == 0;
+  for (int dim = 0; dim < 3; ++dim) aligned &= x.size(dim) == 1 || x.stride(dim) % elems == 0;
   TORCH_CHECK(aligned, name, " must have 16-byte aligned rows (data pointer and strides)");
 }
 

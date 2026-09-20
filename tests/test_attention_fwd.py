@@ -21,7 +21,9 @@ LSE_FLOOR = {torch.float32: 1e-5, torch.bfloat16: 1e-3, torch.float16: 1e-3}
 
 # (impl, dtype) pairs under test. Each kernel adds its rows here.
 IMPLS = [
+    ("naive", torch.float32),
     ("fp32_fused", torch.float32),
+    ("fp32_regtile", torch.float32),
     ("mma", torch.bfloat16),
     ("mma", torch.float16),
     ("mma_pipelined", torch.bfloat16),
@@ -164,5 +166,5 @@ def test_fp32_tile_shapes(tile, monkeypatch):
 def test_auto_picks_a_kernel_for_fp32():
     q, k, v = make_inputs((1, 32, 32, 2, 2, 64), torch.float32)
     torch.testing.assert_close(
-        flash_lab.attention(q, k, v), flash_lab.attention(q, k, v, impl="fp32_fused")
+        flash_lab.attention(q, k, v), flash_lab.attention(q, k, v, impl="fp32_regtile")
     )

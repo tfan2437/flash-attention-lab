@@ -10,7 +10,13 @@ TORCH_LIBRARY(flash_lab, m) {
 
   // Prefill: q [B, S_q, H, D], k and v [B, S_k, H_kv, D] -> o [B, S_q, H, D], lse [B, H, S_q].
   m.def(
+      "attention_naive(Tensor q, Tensor k, Tensor v, bool causal, float softmax_scale)"
+      " -> (Tensor, Tensor)");
+  m.def(
       "attention_fp32_fused(Tensor q, Tensor k, Tensor v, bool causal, float softmax_scale)"
+      " -> (Tensor, Tensor)");
+  m.def(
+      "attention_fp32_regtile(Tensor q, Tensor k, Tensor v, bool causal, float softmax_scale)"
       " -> (Tensor, Tensor)");
   m.def(
       "attention_mma(Tensor q, Tensor k, Tensor v, bool causal, float softmax_scale)"
