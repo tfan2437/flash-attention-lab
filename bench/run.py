@@ -230,10 +230,7 @@ def main(argv=None) -> int:
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
     env = collect_env()
-    if env["git_dirty"] and not args.allow_dirty:
-        print(
-            "refusing to record results from a dirty checkout (use --allow-dirty)", file=sys.stderr
-        )
+    if not recordable(env, args.allow_dirty):
         return 2
     ceilings = CEILINGS.get(env.get("gpu", ""))
 
@@ -263,6 +260,22 @@ def main(argv=None) -> int:
         "tag": args.tag,
         "results": results,
     }
+    write_results(out, env, args.suite, args)
+    return 0
+
+
+def recordable(env: dict, allow_dirty: bool) -> bool:
+    if env["git_dirty"] and not allow_dirty:
+        print(
+            "refusing to record results from a dirty checkout (use --allow-dirty)", file=sys.stderr
+        )
+        return False
+    return True
+
+
+def write_results(out: dict, env: dict, name: str, args) -> Path:
+    """Writes <stamp>-<sha>-<name>[-<tag>].json to bench/results/<gpu>/ (or --out-dir), or to
+    runs/bench/ with a -dirty sha when --allow-dirty let a dirty checkout run."""
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
     sha = (env["git_sha"] or "nogit")[:7]
     if args.allow_dirty and env["git_dirty"]:
@@ -272,10 +285,10 @@ def main(argv=None) -> int:
         out_dir = args.out_dir or Path("bench/results") / gpu_slug(env.get("gpu", "cpu"))
     out_dir.mkdir(parents=True, exist_ok=True)
     tag = f"-{args.tag}" if args.tag else ""
-    path = out_dir / f"{stamp}-{sha}-{args.suite}{tag}.json"
+    path = out_dir / f"{stamp}-{sha}-{name}{tag}.json"
     path.write_text(json.dumps(out, indent=1) + "\n")
     print(f"wrote {path}")
-    return 0
+    return path
 
 
 def format_row(index, config, res) -> str:

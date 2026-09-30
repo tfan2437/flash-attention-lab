@@ -18,6 +18,8 @@ flash_attn_version="${FLASH_ATTN_VERSION:-2.8.3.post1}"
 source .venv/bin/activate
 uv pip install --index-url "$torch_index" "torch==${torch_version}"
 uv pip install numpy pytest pytest-xdist ninja setuptools wheel matplotlib
+# The end-to-end Llama demo (flash_lab.hf, examples/generate.py, bench/e2e.py).
+uv pip install "transformers>=4.56,<5" accelerate
 
 read -r torch_mm abi < <(python -c "import torch; v = torch.__version__.split('.'); \
 print(v[0] + '.' + v[1], 'TRUE' if torch._C._GLIBCXX_USE_CXX11_ABI else 'FALSE')")
