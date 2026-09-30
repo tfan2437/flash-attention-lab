@@ -6,8 +6,9 @@
 The model runs with attn_implementation="flash_lab" (flash_lab.hf): the prompt goes through
 flash_lab.attention and every generated token through flash_lab.decode. --compare repeats the
 generation with another implementation and reports the first generated token that differs.
-With --cache static, generate() compiles the decode step (torch.compile with CUDA graphs), and an
-untimed first run pays for the compilation. bench/e2e.py times prefill and decode separately.
+Each implementation first runs once untimed, which pays for Triton's compilation and autotuning
+and, with --cache static, for torch.compile of the decode step (CUDA graphs). bench/e2e.py times
+prefill and decode separately.
 """
 
 import argparse
@@ -30,8 +31,7 @@ def generate(model, tokenizer, inputs, args) -> tuple[torch.Tensor, float]:
         pad_token_id=tokenizer.eos_token_id,
         cache_implementation=args.cache,
     )
-    if args.cache == "static":
-        model.generate(**inputs, **kwargs)
+    model.generate(**inputs, **kwargs)
     torch.cuda.synchronize()
     start = time.perf_counter()
     out = model.generate(**inputs, **kwargs)
