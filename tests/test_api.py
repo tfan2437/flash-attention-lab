@@ -86,6 +86,8 @@ def test_decode_validation():
         flash_lab.decode(q, k_cache, v_cache, seq_lens.long())
     with pytest.raises(ValueError, match="seq_lens must have shape"):
         flash_lab.decode(q, k_cache, v_cache, seq_lens[:1])
+    with pytest.raises(ValueError, match="seq_lens must be contiguous"):
+        flash_lab.decode(q, k_cache, v_cache, seq_lens[:1].expand(2))
     with pytest.raises(ValueError, match="one query token"):
         flash_lab.decode(q.expand(2, 3, 4, 16), k_cache, v_cache, seq_lens)
     with pytest.raises(ValueError, match="same shape"):

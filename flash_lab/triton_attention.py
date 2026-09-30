@@ -252,6 +252,11 @@ if triton is not None:
             _tuned_kernel[grid](*args, HEAD_DIM=head_dim, CAUSAL=causal)
         return o, lse
 
+    @attention_triton.register_fake
+    def _(q, k, v, causal, softmax_scale):
+        batch, seqlen_q, heads, _ = q.shape
+        return q.new_empty(q.shape), q.new_empty((batch, heads, seqlen_q), dtype=torch.float32)
+
     def autotune_choice(seqlen_k: int, head_dim: int, causal: bool) -> dict | None:
         """The configuration autotuning picked for a key, once it has run."""
         for key, config in _tuned_kernel.cache.items():

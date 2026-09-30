@@ -139,6 +139,8 @@ def check_decode_inputs(
         raise TypeError(f"seq_lens must be int32, got {seq_lens.dtype}")
     if seq_lens.shape != (batch,):
         raise ValueError(f"seq_lens must have shape ({batch},), got {tuple(seq_lens.shape)}")
+    if not seq_lens.is_contiguous():
+        raise ValueError(f"seq_lens must be contiguous, got stride {seq_lens.stride()}")
 
     if block_tables is None:
         batch_c, max_seqlen, heads_kv, head_dim_c = k_cache.shape

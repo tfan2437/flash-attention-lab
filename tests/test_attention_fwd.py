@@ -163,6 +163,13 @@ def test_fp32_tile_shapes(tile, monkeypatch):
     check_output(out, lse, q, k, v, causal=True)
 
 
+def test_auto_prefers_the_fastest_kernel():
+    q, k, v = make_inputs((1, 64, 64, 2, 2, 64), torch.bfloat16)
+    torch.testing.assert_close(
+        flash_lab.attention(q, k, v), flash_lab.attention(q, k, v, impl="triton"), rtol=0, atol=0
+    )
+
+
 def test_auto_picks_a_kernel_for_fp32():
     q, k, v = make_inputs((1, 32, 32, 2, 2, 64), torch.float32)
     torch.testing.assert_close(

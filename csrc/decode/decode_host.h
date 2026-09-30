@@ -35,6 +35,7 @@ inline void check_decode_inputs(const at::Tensor& q, const at::Tensor& k_cache,
   TORCH_CHECK(k_cache.size(2) > 0 && q.size(1) % k_cache.size(2) == 0,
               "query heads must be a multiple of KV heads");
   TORCH_CHECK(seq_lens.dim() == 1 && seq_lens.size(0) == q.size(0), "seq_lens must be [B]");
+  TORCH_CHECK(seq_lens.is_contiguous(), "seq_lens must be contiguous");
   TORCH_CHECK(q.size(2) == 64 || q.size(2) == 128, "unsupported head_dim ", q.size(2));
   FLASH_LAB_CHECK_LAST_DIM(q);
   FLASH_LAB_CHECK_LAST_DIM(k_cache);

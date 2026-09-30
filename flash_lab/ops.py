@@ -63,12 +63,14 @@ class DecodeImpl:
         return None
 
 
+# Ordered by measured speed on H100 (bench/results/h100-80gb-hbm3/*-prefill_bf16.json and
+# *-prefill_fp32.json); impl="auto" takes the first one that supports the input and is built.
 PREFILL_IMPLS: dict[str, PrefillImpl] = {
-    "mma_pipelined": PrefillImpl(
-        op="attention_mma_pipelined", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
-    ),
     "triton": PrefillImpl(
         op="attention_triton", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
+    ),
+    "mma_pipelined": PrefillImpl(
+        op="attention_mma_pipelined", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
     ),
     "mma": PrefillImpl(
         op="attention_mma", dtypes=(torch.bfloat16, torch.float16), head_dims=(64, 128)
@@ -93,6 +95,27 @@ DECODE_IMPLS: dict[str, DecodeImpl] = {
 
 def _op_exists(op: str) -> bool:
     return hasattr(torch.ops.flash_lab, op)
+
+
+def _register_fakes() -> None:
+    """Shape-only versions of the compiled ops, so torch.compile can trace through them."""
+
+    def prefill_fake(q, k, v, causal, softmax_scale):
+        batch, seqlen_q, heads, _ = q.shape
+        return q.new_empty(q.shape), q.new_empty((batch, heads, seqlen_q), dtype=torch.float32)
+
+    def decode_fake(q, k_cache, v_cache, seq_lens, softmax_scale, num_splits):
+        return q.new_empty(q.shape), q.new_empty(q.shape[:2], dtype=torch.float32)
+
+    for spec in PREFILL_IMPLS.values():
+        if spec.op != "attention_triton" and _op_exists(spec.op):
+            torch.library.register_fake(f"flash_lab::{spec.op}")(prefill_fake)
+    for spec in DECODE_IMPLS.values():
+        if _op_exists(spec.op):
+            torch.library.register_fake(f"flash_lab::{spec.op}")(decode_fake)
+
+
+_register_fakes()
 
 
 def available_impls() -> dict[str, list[str]]:
