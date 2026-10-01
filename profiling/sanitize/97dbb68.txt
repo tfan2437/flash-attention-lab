@@ -1,0 +1,12 @@
+== compute-sanitizer --tool memcheck
+27 passed in 0.76s
+========= ERROR SUMMARY: 0 errors
+== compute-sanitizer --tool racecheck
+27 passed in 6.08s
+========= RACECHECK SUMMARY: 0 hazards displayed (0 errors, 0 warnings)
+== compute-sanitizer --tool synccheck
+27 passed in 0.71s
+========= ERROR SUMMARY: 0 errors
+== compute-sanitizer --tool initcheck
+27 passed in 0.75s
+========= ERROR SUMMARY: 0 errors

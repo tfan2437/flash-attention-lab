@@ -1,0 +1,214 @@
+{
+ "schema": 1,
+ "suite": "e2e_llama",
+ "kind": "e2e",
+ "env": {
+  "date": "2026-09-30T13:57:04+00:00",
+  "host": "atl1-1-03-013-13-0.pace.gatech.edu",
+  "slurm_job": "6086279",
+  "git_sha": "e5449d82afcf280d036d153a4a77f8db21b45f8e",
+  "git_dirty": false,
+  "python": "3.12.12",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "triton": "3.4.0",
+  "flash_attn": "2.8.3.post1",
+  "transformers": "4.57.6",
+  "flash_lab_env": {},
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "compute_capability": "9.0",
+  "sm_count": 132,
+  "mem_gb": 79.2,
+  "driver": "595.71.05",
+  "clocks_mhz": {
+   "sm": "1980",
+   "mem": "2619",
+   "max_sm": "1980",
+   "max_mem": "2619"
+  }
+ },
+ "model": "meta-llama/Llama-3.1-8B-Instruct",
+ "model_revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+ "dtype": "bfloat16",
+ "cache": "static",
+ "n_warmup": 2,
+ "runs": 3,
+ "seed": 0,
+ "tag": null,
+ "results": [
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 25.07002092897892,
+    "min": 24.781051091849804,
+    "max": 25.090222246944904
+   },
+   "decode_step_ms": {
+    "median": 10.340026579797268,
+    "p10": 10.19637007266283,
+    "p90": 10.441328026354313
+   },
+   "decode_tokens_per_s": 96.71155023468097,
+   "max_logit_err_vs_fp32": 0.06447744369506836,
+   "max_logit_err_torch_vs_fp32": 0.05789041519165039,
+   "fp32_top2_margin": 0.25334930419921875,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 8192,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 518.6734730377793,
+    "min": 518.0005710572004,
+    "max": 519.9171174317598
+   },
+   "decode_step_ms": {
+    "median": 22.760438732802868,
+    "p10": 22.608445771038532,
+    "p90": 22.87458796054125
+   },
+   "decode_tokens_per_s": 43.93588417778507,
+   "max_logit_err_vs_fp32": 0.09434700012207031,
+   "max_logit_err_torch_vs_fp32": 0.10331535339355469,
+   "fp32_top2_margin": 0.04459881782531738,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_attention_2",
+   "status": "incorrect",
+   "max_logit_err_vs_fp32": 13.241538524627686,
+   "max_logit_err_torch_vs_fp32": 0.05789041519165039,
+   "fp32_top2_margin": 0.25334930419921875
+  },
+  {
+   "config": {
+    "prompt_len": 8192,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_attention_2",
+   "status": "incorrect",
+   "max_logit_err_vs_fp32": 2.615884780883789,
+   "max_logit_err_torch_vs_fp32": 0.10331535339355469,
+   "fp32_top2_margin": 0.04459881782531738
+  },
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 29.096788726747036,
+    "min": 29.08660564571619,
+    "max": 29.102565720677376
+   },
+   "decode_step_ms": {
+    "median": 8.18827748298645,
+    "p10": 8.165440522134304,
+    "p90": 8.211628161370754
+   },
+   "decode_tokens_per_s": 122.12580754350272,
+   "max_logit_err_vs_fp32": 0.0644078254699707,
+   "max_logit_err_torch_vs_fp32": 0.05789041519165039,
+   "fp32_top2_margin": 0.25334930419921875,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 8192,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 272.2666338086128,
+    "min": 271.88023179769516,
+    "max": 273.0874791741371
+   },
+   "decode_step_ms": {
+    "median": 9.562247432768345,
+    "p10": 9.545507468283176,
+    "p90": 9.58545096218586
+   },
+   "decode_tokens_per_s": 104.57792553800213,
+   "max_logit_err_vs_fp32": 0.08390569686889648,
+   "max_logit_err_torch_vs_fp32": 0.10331535339355469,
+   "fp32_top2_margin": 0.04459881782531738,
+   "compared_with": "sdpa",
+   "first_token_difference": 0
+  },
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 23.476718924939632,
+    "min": 23.4658345580101,
+    "max": 23.485491052269936
+   },
+   "decode_step_ms": {
+    "median": 8.190150372684002,
+    "p10": 8.165551535785198,
+    "p90": 8.223499730229378
+   },
+   "decode_tokens_per_s": 122.09788031917283,
+   "max_logit_err_vs_fp32": 0.06721353530883789,
+   "max_logit_err_torch_vs_fp32": 0.05789041519165039,
+   "fp32_top2_margin": 0.25334930419921875,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 8192,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 310.4768190532923,
+    "min": 309.9562209099531,
+    "max": 311.9751950725913
+   },
+   "decode_step_ms": {
+    "median": 9.676693938672543,
+    "p10": 9.608014672994614,
+    "p90": 9.839352779090405
+   },
+   "decode_tokens_per_s": 103.34107974662066,
+   "max_logit_err_vs_fp32": 0.0991048812866211,
+   "max_logit_err_torch_vs_fp32": 0.10331535339355469,
+   "fp32_top2_margin": 0.04459881782531738,
+   "compared_with": "sdpa",
+   "first_token_difference": 0
+  }
+ ]
+}
