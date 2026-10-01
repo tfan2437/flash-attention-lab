@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "FlashAttention-2 forward and KV-cache decode kernels in CUDA and Triton"
 readme = "README.md"
 license = "MIT"
+authors = [{ name = "Ting Wei Fan", email = "tfan2437@gmail.com" }]
 requires-python = ">=3.10"
 dependencies = ["torch>=2.4", "numpy"]
 
