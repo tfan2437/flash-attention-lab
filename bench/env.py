@@ -7,6 +7,7 @@ import importlib
 import json
 import os
 import platform
+import re
 import socket
 import subprocess
 from datetime import datetime, timezone
@@ -33,6 +34,32 @@ def _nvidia_smi(fields: str) -> list[str] | None:
     return [part.strip() for part in out.split(",")] if out else None
 
 
+def _machine() -> dict:
+    """Host CPU, memory, and OS. On a Slurm node the CPUs available to this process are the
+    allocation, while the memory total is the node's; the allocation is recorded alongside."""
+    machine = {"os": platform.platform(), "logical_cpus": os.cpu_count()}
+    try:
+        with open("/proc/cpuinfo") as f:
+            cpuinfo = f.read()
+        with open("/proc/meminfo") as f:
+            meminfo = f.read()
+    except OSError:  # not Linux
+        machine["cpu"] = _run(["sysctl", "-n", "machdep.cpu.brand_string"]) or platform.processor()
+        return machine
+    models = re.findall(r"^model name\s*:\s*(.+)$", cpuinfo, re.MULTILINE)
+    sockets = set(re.findall(r"^physical id\s*:\s*(\d+)$", cpuinfo, re.MULTILINE))
+    total_kb = re.search(r"^MemTotal:\s*(\d+)", meminfo, re.MULTILINE)
+    machine.update(
+        cpu=models[0].strip() if models else None,
+        cpu_sockets=len(sockets) or None,
+        cpus_available=len(os.sched_getaffinity(0)),
+        mem_gb=round(int(total_kb.group(1)) / 2**20, 1) if total_kb else None,
+        slurm_cpus=os.environ.get("SLURM_CPUS_PER_TASK"),
+        slurm_mem_mb=os.environ.get("SLURM_MEM_PER_NODE"),
+    )
+    return machine
+
+
 def collect_env() -> dict:
     import torch
 
@@ -42,6 +69,7 @@ def collect_env() -> dict:
         "slurm_job": os.environ.get("SLURM_JOB_ID"),
         "git_sha": _run(["git", "rev-parse", "HEAD"]),
         "git_dirty": bool(_run(["git", "status", "--porcelain", "--untracked-files=no"])),
+        "machine": _machine(),
         "python": platform.python_version(),
         "torch": torch.__version__,
         "cuda_runtime": torch.version.cuda,
