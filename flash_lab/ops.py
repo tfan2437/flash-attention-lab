@@ -117,16 +117,23 @@ def _register_fakes() -> None:
 
 _register_fakes()
 
+# The ops are all registered by the imports above, so availability is looked up once.
+_BUILT_OPS = frozenset(
+    spec.op for spec in (*PREFILL_IMPLS.values(), *DECODE_IMPLS.values()) if _op_exists(spec.op)
+)
+
 
 def available_impls() -> dict[str, list[str]]:
     """Implementations compiled into this build, by entry point."""
     return {
-        "attention": [name for name, spec in PREFILL_IMPLS.items() if _op_exists(spec.op)],
-        "decode": [name for name, spec in DECODE_IMPLS.items() if _op_exists(spec.op)],
+        "attention": [name for name, spec in PREFILL_IMPLS.items() if spec.op in _BUILT_OPS],
+        "decode": [name for name, spec in DECODE_IMPLS.items() if spec.op in _BUILT_OPS],
     }
 
 
-def _select(table: dict, impl: str, device: torch.device, describe: str, reason_of):
+def _select(table: dict, impl: str, device: torch.device, describe, reason_of):
+    """The implementation to run. describe() names the problem in error messages; it is only
+    called on failure, which keeps string formatting off the per-call path."""
     if impl != "auto" and impl not in table:
         raise ValueError(f"unknown impl {impl!r}; choose from {['auto', *table]}")
     if device.type != "cuda":
@@ -137,14 +144,14 @@ def _select(table: dict, impl: str, device: torch.device, describe: str, reason_
         spec = table[impl]
         reason = reason_of(spec)
         if reason is not None:
-            raise ValueError(f"impl {impl!r} cannot run {describe}: {reason}")
-        if not _op_exists(spec.op):
+            raise ValueError(f"impl {impl!r} cannot run {describe()}: {reason}")
+        if spec.op not in _BUILT_OPS:
             raise RuntimeError(f"impl {impl!r} is not available in this build{missing}")
         return spec
     for spec in table.values():
-        if getattr(spec, "in_auto", True) and reason_of(spec) is None and _op_exists(spec.op):
+        if getattr(spec, "in_auto", True) and spec.op in _BUILT_OPS and reason_of(spec) is None:
             return spec
-    raise ValueError(f"no available implementation supports {describe}{missing}")
+    raise ValueError(f"no available implementation supports {describe()}{missing}")
 
 
 def attention(
@@ -166,15 +173,14 @@ def attention(
     scale = softmax_scale if softmax_scale is not None else 1.0 / math.sqrt(shape.head_dim)
     if not scale > 0:
         raise ValueError(f"softmax_scale must be positive, got {scale}")
-    describe = (
-        f"dtype={q.dtype}, head_dim={shape.head_dim}, heads={shape.heads}/{shape.heads_kv}, "
-        f"S_q={shape.seqlen_q}, S_k={shape.seqlen_k}, causal={causal}"
-    )
     spec = _select(
         PREFILL_IMPLS,
         impl,
         q.device,
-        describe,
+        lambda: (
+            f"dtype={q.dtype}, head_dim={shape.head_dim}, heads={shape.heads}/{shape.heads_kv}, "
+            f"S_q={shape.seqlen_q}, S_k={shape.seqlen_k}, causal={causal}"
+        ),
         lambda s: s.unsupported_reason(shape, q.dtype, causal),
     )
     out, lse = getattr(torch.ops.flash_lab, spec.op)(q, k, v, causal, scale)
@@ -202,12 +208,15 @@ def decode(
     scale = softmax_scale if softmax_scale is not None else 1.0 / math.sqrt(shape.head_dim)
     if num_splits is not None and num_splits < 1:
         raise ValueError(f"num_splits must be positive, got {num_splits}")
-    describe = (
-        f"dtype={q.dtype}, head_dim={shape.head_dim}, heads={shape.heads}/{shape.heads_kv}, "
-        f"paged={shape.paged}"
-    )
     spec = _select(
-        DECODE_IMPLS, impl, q.device, describe, lambda s: s.unsupported_reason(shape, q.dtype)
+        DECODE_IMPLS,
+        impl,
+        q.device,
+        lambda: (
+            f"dtype={q.dtype}, head_dim={shape.head_dim}, heads={shape.heads}/{shape.heads_kv}, "
+            f"paged={shape.paged}"
+        ),
+        lambda s: s.unsupported_reason(shape, q.dtype),
     )
     out, lse = getattr(torch.ops.flash_lab, spec.op)(
         q3, k_cache, v_cache, seq_lens, scale, num_splits or 0
