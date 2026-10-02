@@ -15,6 +15,7 @@ import math
 import re
 import statistics
 import sys
+import time
 import warnings
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,6 +25,7 @@ import torch.nn.functional as F
 from torch.nn.attention import SDPBackend, sdpa_kernel
 
 from bench import baselines
+from bench.clocks import ClockSampler
 from bench.env import collect_env
 from bench.flops import CEILINGS, attention_flops, decode_bytes, prefill_min_bytes
 from bench.suites import SUITES, DecodeConfig, PrefillConfig
@@ -139,7 +141,16 @@ def decode_inputs(cfg: DecodeConfig, dtype, seed: int):
     return q, k_cache, v_cache, seq_lens
 
 
-def bench_one(kind, impl, cfg, dtype, causal, args, ceilings) -> dict:
+def triton_config(cfg, causal) -> dict | None:
+    from flash_lab import triton_attention
+
+    if not hasattr(triton_attention, "pinned_config"):  # no Triton on this platform
+        return None
+    pinned = triton_attention.pinned_config()
+    return pinned or triton_attention.autotune_choice(cfg.seqlen, cfg.head_dim, causal)
+
+
+def bench_one(kind, impl, cfg, dtype, causal, args, ceilings, clocks) -> dict:
     scale = 1.0 / math.sqrt(cfg.head_dim)
     elem = torch.finfo(dtype).bits // 8
     result = {"impl": impl, "status": "ok"}
@@ -162,7 +173,9 @@ def bench_one(kind, impl, cfg, dtype, causal, args, ceilings) -> dict:
             if not result.pop("correct"):
                 result["status"] = "incorrect"
                 return result
+            start = time.time()
             times = time_cuda(run, args.n_warmup, args.n_iters, args.flush_l2)
+            result["gpu_during_timing"] = clocks.window(start, time.time())
     except baselines.Unsupported as exc:
         return {"impl": impl, "status": "unsupported", "reason": str(exc)}
     except torch.cuda.OutOfMemoryError:
@@ -177,6 +190,8 @@ def bench_one(kind, impl, cfg, dtype, causal, args, ceilings) -> dict:
     stats = summarize(times)
     seconds = stats["median"] / 1e3
     result["op_ms"] = stats
+    if impl == "triton":
+        result["triton_config"] = triton_config(cfg, causal)
     if kind == "prefill":
         flops = attention_flops(cfg.batch, cfg.heads, cfg.seqlen, cfg.seqlen, cfg.head_dim, causal)
         result["flops"] = flops
@@ -235,17 +250,20 @@ def main(argv=None) -> int:
     ceilings = CEILINGS.get(env.get("gpu", ""))
 
     results = []
-    for index in indices:
-        cfg = suite.configs[index]
-        for dtype in dtypes:
-            for causal in causal_values:
-                for impl in impls:
-                    res = bench_one(suite.kind, impl, cfg, dtype, causal, args, ceilings)
-                    config = {**vars(cfg), "dtype": str(dtype).removeprefix("torch.")}
-                    if suite.kind == "prefill":
-                        config["causal"] = causal
-                    results.append({"config": config, **res})
-                    print(format_row(index, config, res), flush=True)
+    with ClockSampler() as clocks:
+        for index in indices:
+            cfg = suite.configs[index]
+            for dtype in dtypes:
+                for causal in causal_values:
+                    for impl in impls:
+                        res = bench_one(
+                            suite.kind, impl, cfg, dtype, causal, args, ceilings, clocks
+                        )
+                        config = {**vars(cfg), "dtype": str(dtype).removeprefix("torch.")}
+                        if suite.kind == "prefill":
+                            config["causal"] = causal
+                        results.append({"config": config, **res})
+                        print(format_row(index, config, res), flush=True)
 
     out = {
         "schema": 1,
@@ -298,7 +316,9 @@ def format_row(index, config, res) -> str:
     if res["status"] != "ok":
         return f"{name:<70} {res['impl']:<15} {res['status']}"
     rate = f"{res['tflops']:8.1f} TFLOP/s" if "tflops" in res else f"{res['gbps']:8.1f} GB/s"
-    return f"{name:<70} {res['impl']:<15} {res['op_ms']['median']:9.3f} ms {rate}"
+    gpu = res.get("gpu_during_timing")
+    clock = f"  SM {gpu['sm_mhz']['median']:.0f} MHz" if gpu else ""
+    return f"{name:<70} {res['impl']:<15} {res['op_ms']['median']:9.3f} ms {rate}{clock}"
 
 
 if __name__ == "__main__":

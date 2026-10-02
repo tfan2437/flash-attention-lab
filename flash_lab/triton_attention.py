@@ -7,7 +7,8 @@ keys pay for the comparison, so the key loop is split in two.
 
 Block sizes, warps, and pipeline stages are autotuned per (head_dim, causal, length bucket).
 FLASH_LAB_TRITON_AUTOTUNE=0 pins one configuration instead, which keeps test runs from compiling
-every candidate for every shape.
+every candidate for every shape. FLASH_LAB_TRITON_CONFIG=BLOCK_M,BLOCK_N,num_warps,num_stages pins
+a given one, so a profiler sees the configuration autotuning picked without its trial launches.
 """
 
 import math
@@ -205,6 +206,16 @@ if triton is not None:
     )
     _FIXED_CONFIG = {"BLOCK_M": 64, "BLOCK_N": 64, "num_warps": 4, "num_stages": 3}
 
+    def pinned_config() -> dict | None:
+        """The configuration pinned by FLASH_LAB_TRITON_CONFIG or FLASH_LAB_TRITON_AUTOTUNE=0."""
+        spec = os.environ.get("FLASH_LAB_TRITON_CONFIG")
+        if spec:
+            bm, bn, warps, stages = (int(x) for x in spec.split(","))
+            return {"BLOCK_M": bm, "BLOCK_N": bn, "num_warps": warps, "num_stages": stages}
+        if os.environ.get("FLASH_LAB_TRITON_AUTOTUNE", "1") == "0":
+            return _FIXED_CONFIG
+        return None
+
     def _seq_bucket(seqlen_k: int) -> int:
         return min(1 << max(seqlen_k - 1, 1).bit_length(), 16384)
 
@@ -241,9 +252,10 @@ if triton is not None:
             softmax_scale * LOG2E,
             _seq_bucket(seqlen_k),
         )
-        if os.environ.get("FLASH_LAB_TRITON_AUTOTUNE", "1") == "0":
-            grid = (math.ceil(seqlen_q / _FIXED_CONFIG["BLOCK_M"]), batch * heads)
-            _attention_fwd_kernel[grid](*args, HEAD_DIM=head_dim, CAUSAL=causal, **_FIXED_CONFIG)
+        config = pinned_config()
+        if config is not None:
+            grid = (math.ceil(seqlen_q / config["BLOCK_M"]), batch * heads)
+            _attention_fwd_kernel[grid](*args, HEAD_DIM=head_dim, CAUSAL=causal, **config)
         else:
 
             def grid(meta):

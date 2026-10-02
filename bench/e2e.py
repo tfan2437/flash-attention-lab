@@ -32,6 +32,7 @@ from transformers import AutoModelForCausalLM, CompileConfig, StaticCache
 from transformers.generation.streamers import BaseStreamer
 
 import flash_lab.hf
+from bench.clocks import ClockSampler
 from bench.env import collect_env
 from bench.run import FLOOR, recordable, write_results
 
@@ -98,7 +99,7 @@ def first_difference(tokens: torch.Tensor, reference: torch.Tensor) -> int | Non
     return int(differ[0]) if len(differ) else None
 
 
-def bench_impl(model, impl, prompts, args, eos_id, checks, reference_tokens) -> list[dict]:
+def bench_impl(model, impl, prompts, args, eos_id, checks, reference_tokens, clocks) -> list[dict]:
     model.set_attn_implementation(impl)
     torch._dynamo.reset()
     results = []
@@ -119,7 +120,9 @@ def bench_impl(model, impl, prompts, args, eos_id, checks, reference_tokens) -> 
                 continue
             for _ in range(args.n_warmup):
                 generate(model, input_ids, args.new_tokens, eos_id)
+            start = time.time()
             runs = [generate(model, input_ids, args.new_tokens, eos_id) for _ in range(args.runs)]
+            gpu = clocks.window(start, time.time())
         except (RuntimeError, ValueError, NotImplementedError, ImportError) as exc:
             reason = str(exc).strip().splitlines()[0] if str(exc).strip() else type(exc).__name__
             results.append({"config": config, "impl": impl, "status": "error", "reason": reason})
@@ -142,6 +145,7 @@ def bench_impl(model, impl, prompts, args, eos_id, checks, reference_tokens) -> 
                 "p90": statistics.quantiles(steps, n=10)[-1],
             },
             "decode_tokens_per_s": args.batch * 1e3 / step_ms,
+            "gpu_during_timing": gpu,
             **check,
             "compared_with": reference[0],
             "first_token_difference": first_difference(tokens, reference[1]),
@@ -205,9 +209,12 @@ def main(argv=None) -> int:
 
     results = []
     reference_tokens: dict[int, tuple[str, torch.Tensor]] = {}
-    for impl in args.impls.split(","):
-        results += bench_impl(model, impl, prompts, args, eos_id, checks, reference_tokens)
-        torch.cuda.empty_cache()
+    with ClockSampler() as clocks:
+        for impl in args.impls.split(","):
+            results += bench_impl(
+                model, impl, prompts, args, eos_id, checks, reference_tokens, clocks
+            )
+            torch.cuda.empty_cache()
 
     out = {
         "schema": 1,
