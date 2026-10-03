@@ -25,6 +25,11 @@ mkdir -p "$out_dir"
 profile() {
   ncu --set full --import-source yes --kernel-name "regex:$regex" --launch-skip "${NCU_SKIP:-10}" \
     --launch-count "${NCU_COUNT:-1}" --force-overwrite --export "$RUN_DIR/$report" python "$@"
+  # run_logged turns errexit off, so a run that profiled nothing has to be caught here.
+  if [ ! -f "$RUN_DIR/$report.ncu-rep" ]; then
+    echo "ncu wrote no report: no launch of '$regex' was profiled" >&2
+    return 1
+  fi
   ncu --import "$RUN_DIR/$report.ncu-rep" --page raw --csv >"$out_dir/$report.csv"
   python scripts/pace/ncu_digest.py "$out_dir/$report.csv" >"$out_dir/$report.md"
   cat "$out_dir/$report.md"

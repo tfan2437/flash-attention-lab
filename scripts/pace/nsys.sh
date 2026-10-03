@@ -17,6 +17,11 @@ mkdir -p "$out_dir"
 
 trace() {
   nsys profile -t cuda,nvtx --force-overwrite true -o "$RUN_DIR/$report" python "$@"
+  # run_logged turns errexit off, so a failed trace has to be caught here.
+  if [ ! -f "$RUN_DIR/$report.nsys-rep" ]; then
+    echo "nsys wrote no report" >&2
+    return 1
+  fi
   nsys stats --report nvtx_sum,nvtx_kern_sum --format csv --force-export true \
     --output "$out_dir/$report" "$RUN_DIR/$report.nsys-rep"
   python scripts/pace/nsys_digest.py "$out_dir/$report" >"$out_dir/$report.md"

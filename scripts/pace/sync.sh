@@ -20,12 +20,13 @@ case "${1:-}" in
       --exclude .slurm_job \
       --exclude bench/results/ --exclude profiling/ --exclude requirements-pace.lock \
       ./ "$host:$dir/"
-    # Committed results go too, so the remote tree is clean, but without --delete: outputs
-    # produced on PACE and not pulled yet must survive.
+    # Committed results go too, so the remote tree is clean, but without --delete, and with
+    # --update so that a newer remote file (an output produced on PACE and not pulled yet) is
+    # never replaced by an older local copy.
     ssh "$host" "mkdir -p '$dir/bench/results' '$dir/profiling'"
-    rsync -rlpz --checksum bench/results/ "$host:$dir/bench/results/"
-    rsync -rlpz --checksum profiling/ "$host:$dir/profiling/"
-    rsync -rlpz --checksum requirements-pace.lock "$host:$dir/"
+    rsync -rltpz --update bench/results/ "$host:$dir/bench/results/"
+    rsync -rltpz --update profiling/ "$host:$dir/profiling/"
+    rsync -rltpz --update requirements-pace.lock "$host:$dir/"
     ;;
   pull)
     for path in runs/ bench/results/ profiling/ requirements-pace.lock; do

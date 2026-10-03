@@ -5,12 +5,19 @@
 # summary.md, and returns the command's exit status. The pipeline is waited on in the foreground,
 # so no output is lost when srun tears the job step down.
 
+# Uncommitted changes to tracked files other than outputs (results and profiler digests), the
+# same rule as bench/env.py: a run that regenerates a digest does not make later runs dirty.
+code_dirty() {
+  [ -n "$(git status --porcelain --untracked-files=no -- . ':!bench/results' ':!profiling' \
+    2>/dev/null)" ]
+}
+
 start_run_dir() {
   local name="$1"
   shift
   mkdir -p runs bench/results profiling
   GIT_SHA="$(git rev-parse --short=7 HEAD 2>/dev/null || echo nogit)"
-  if [ -n "$(git status --porcelain --untracked-files=no 2>/dev/null)" ]; then
+  if code_dirty; then
     GIT_SHA="${GIT_SHA}-dirty"
   fi
   RUN_DIR="runs/$(date +%Y%m%d-%H%M%S)-${GIT_SHA}-${name}"

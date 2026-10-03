@@ -12,6 +12,8 @@ import socket
 import subprocess
 from datetime import datetime, timezone
 
+OUTPUT_DIRS = ("bench/results", "profiling")
+
 
 def _run(args: list[str]) -> str | None:
     try:
@@ -60,6 +62,16 @@ def _machine() -> dict:
     return machine
 
 
+def code_dirty() -> bool:
+    """Uncommitted changes to tracked files, other than results and profiler digests: those are
+    outputs, and a run that regenerates one must not mark the runs after it as dirty."""
+    status = _run(
+        ["git", "status", "--porcelain", "--untracked-files=no", "--", "."]
+        + [f":!{path}" for path in OUTPUT_DIRS]
+    )
+    return bool(status)
+
+
 def collect_env() -> dict:
     import torch
 
@@ -68,7 +80,7 @@ def collect_env() -> dict:
         "host": socket.gethostname(),
         "slurm_job": os.environ.get("SLURM_JOB_ID"),
         "git_sha": _run(["git", "rev-parse", "HEAD"]),
-        "git_dirty": bool(_run(["git", "status", "--porcelain", "--untracked-files=no"])),
+        "git_dirty": code_dirty(),
         "machine": _machine(),
         "python": platform.python_version(),
         "torch": torch.__version__,
