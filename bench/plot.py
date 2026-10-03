@@ -24,10 +24,10 @@ UNITS = {
     "Kbyte": 1e3,
     "Mbyte": 1e6,
     "Gbyte": 1e9,
-    "nsecond": 1e-9,
-    "usecond": 1e-6,
-    "msecond": 1e-3,
-    "second": 1,
+    "ns": 1e-9,
+    "us": 1e-6,
+    "ms": 1e-3,
+    "s": 1,
 }
 THEMES = {
     "light": {

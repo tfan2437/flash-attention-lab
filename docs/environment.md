@@ -93,7 +93,7 @@ bf16. Together they cover both head dims the kernels support.
 | | Llama-3.1-8B-Instruct | Llama-3.2-1B-Instruct |
 |---|---|---|
 | Used by | `bench/e2e.py`, `bench/e2e_trace.py`, `examples/generate.py` | `tests/test_e2e_llama.py` |
-| Revision | 0e9e39f (recorded in the e2e JSON) | the cached snapshot (not pinned) |
+| Revision | 0e9e39f (recorded in the e2e JSON) | 9213176 (the cached snapshot; the tests do not pin it) |
 | Layers | 32 | 16 |
 | Hidden size / MLP size | 4096 / 14336 | 2048 / 8192 |
 | Query heads / KV heads | 32 / 8 (4 query heads per KV head) | 32 / 8 |
