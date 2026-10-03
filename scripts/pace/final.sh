@@ -24,6 +24,9 @@ step() {
   "$@" || failed+=("$*")
 }
 
+# A full rebuild, so profiling/ptxas/<sha>.txt lists every kernel's registers, spills, and shared
+# memory for the commit that produced the numbers.
+rm -rf build flash_lab/_C*.so
 step scripts/pace/build.sh
 step scripts/pace/test.sh
 step scripts/pace/sanitize.sh
