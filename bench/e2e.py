@@ -83,11 +83,19 @@ def last_logits(model, input_ids, cache_len: int | None = None) -> torch.Tensor:
     return model(input_ids, logits_to_keep=1, **kwargs).logits[:, -1].double()
 
 
-def fp32_logits(model_name: str, prompts: dict) -> dict[int, torch.Tensor]:
+def fp32_logits(model_name: str, prompts: dict, max_len: int) -> dict[int, torch.Tensor]:
+    """Reference logits for the prompts of at most max_len tokens, one sequence at a time. In
+    fp32 with grouped KV heads, transformers' SDPA path runs PyTorch's math backend, whose score
+    matrix (32 query heads x S x S fp32: 8 GiB at S = 8192, 32 GiB at 16384) has to fit next to
+    32 GB of fp32 weights."""
     model = AutoModelForCausalLM.from_pretrained(
         model_name, dtype=torch.float32, attn_implementation="sdpa", device_map="cuda"
     ).eval()
-    logits = {n: last_logits(model, ids) for n, ids in prompts.items()}
+    logits = {
+        n: torch.cat([last_logits(model, ids[i : i + 1]) for i in range(len(ids))])
+        for n, ids in prompts.items()
+        if n <= max_len
+    }
     del model
     gc.collect()
     torch.cuda.empty_cache()
@@ -105,19 +113,22 @@ def bench_impl(model, impl, prompts, args, eos_id, checks, reference_tokens, clo
     results = []
     for prompt_len, input_ids in prompts.items():
         config = {"prompt_len": prompt_len, "batch": args.batch, "new_tokens": args.new_tokens}
-        want, err_torch, margin = checks[prompt_len]
         try:
-            got = last_logits(model, input_ids, prompt_len + args.new_tokens)
-            check = {
-                "max_logit_err_vs_fp32": (got - want).abs().max().item(),
-                "max_logit_err_torch_vs_fp32": err_torch,
-                "fp32_top2_margin": margin,
-            }
-            if not check["max_logit_err_vs_fp32"] <= 2 * err_torch + FLOOR[torch.bfloat16]:
-                results.append({"config": config, "impl": impl, "status": "incorrect", **check})
-                err = check["max_logit_err_vs_fp32"]
-                print(f"{impl:<18} prompt {prompt_len:>6}: incorrect, logit error {err:.3f}")
-                continue
+            if prompt_len in checks:
+                want, err_torch, margin = checks[prompt_len]
+                got = last_logits(model, input_ids, prompt_len + args.new_tokens)
+                check = {
+                    "max_logit_err_vs_fp32": (got - want).abs().max().item(),
+                    "max_logit_err_torch_vs_fp32": err_torch,
+                    "fp32_top2_margin": margin,
+                }
+                if not check["max_logit_err_vs_fp32"] <= 2 * err_torch + FLOOR[torch.bfloat16]:
+                    results.append({"config": config, "impl": impl, "status": "incorrect", **check})
+                    err = check["max_logit_err_vs_fp32"]
+                    print(f"{impl:<18} prompt {prompt_len:>6}: incorrect, logit error {err:.3f}")
+                    continue
+            else:
+                check = {"logit_check": "skipped: prompt longer than --check-max-len"}
             for _ in range(args.n_warmup):
                 generate(model, input_ids, args.new_tokens, eos_id)
             start = time.time()
@@ -154,8 +165,13 @@ def bench_impl(model, impl, prompts, args, eos_id, checks, reference_tokens, clo
         print(
             f"{impl:<18} prompt {prompt_len:>6}: ttft {result['ttft_ms']['median']:8.1f} ms, "
             f"decode {step_ms:6.2f} ms/step ({result['decode_tokens_per_s']:7.1f} tokens/s), "
-            f"logit error {check['max_logit_err_vs_fp32']:.3f} (sdpa {err_torch:.3f}), "
-            f"first difference from {reference[0]}: {result['first_token_difference']}",
+            + (
+                f"logit error {check['max_logit_err_vs_fp32']:.3f} "
+                f"(sdpa {check['max_logit_err_torch_vs_fp32']:.3f}), "
+                if "max_logit_err_vs_fp32" in check
+                else "logit check skipped, "
+            )
+            + f"first difference from {reference[0]}: {result['first_token_difference']}",
             flush=True,
         )
     return results
@@ -171,6 +187,12 @@ def parse_args(argv):
     parser.add_argument("--n-warmup", type=int, default=2)
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument(
+        "--check-max-len",
+        type=int,
+        default=8192,
+        help="check logits against fp32 only for prompts up to this length (memory)",
+    )
     parser.add_argument("--out-dir", type=Path, help="default: bench/results/<gpu>")
     parser.add_argument("--allow-dirty", action="store_true", help="write to runs/ instead")
     parser.add_argument("--tag", help="appended to the output file name")
@@ -194,7 +216,7 @@ def main(argv=None) -> int:
         int(n): torch.randint(0, 128000, (args.batch, int(n)), generator=gen).cuda()
         for n in args.prompt_lens.split(",")
     }
-    reference = fp32_logits(args.model, prompts)
+    reference = fp32_logits(args.model, prompts, args.check_max_len)
 
     model = AutoModelForCausalLM.from_pretrained(
         args.model, dtype=torch.bfloat16, attn_implementation="sdpa", device_map="cuda"
@@ -203,6 +225,8 @@ def main(argv=None) -> int:
     eos_id = eos[0] if isinstance(eos, list) else eos
     checks = {}
     for n, ids in prompts.items():
+        if n not in reference:
+            continue
         err_torch = (last_logits(model, ids) - reference[n]).abs().max().item()
         top2 = reference[n].topk(2, dim=-1).values
         checks[n] = (reference[n], err_torch, (top2[:, 0] - top2[:, 1]).min().item())
