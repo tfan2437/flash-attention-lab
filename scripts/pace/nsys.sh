@@ -22,8 +22,10 @@ trace() {
     echo "nsys wrote no report" >&2
     return 1
   fi
+  # --force-overwrite: without it nsys stats skips CSVs that already exist, and the digest below
+  # would silently describe the previous trace.
   nsys stats --report nvtx_sum,nvtx_kern_sum --format csv --force-export true \
-    --output "$out_dir/$report" "$RUN_DIR/$report.nsys-rep"
+    --force-overwrite true --output "$out_dir/$report" "$RUN_DIR/$report.nsys-rep"
   python scripts/pace/nsys_digest.py "$out_dir/$report" >"$out_dir/$report.md"
   cat "$out_dir/$report.md"
 }
