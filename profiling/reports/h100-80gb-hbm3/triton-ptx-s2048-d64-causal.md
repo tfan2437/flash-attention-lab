@@ -1,12 +1,3 @@
----------------------------------------
-Begin Slurm Prolog: Aug-30-2026 03:36:36
-Job ID:    6082047
-User ID:   tfan60
-Account:   coc
-Job name:  python
-Partition: ice-gpu
-QOS:
----------------------------------------
 # Triton PTX: seqlen 2048, head_dim 64, causal True
 
 - triton 3.4.0, target sm_90a
