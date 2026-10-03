@@ -87,6 +87,33 @@ SUITES = {
         flush_l2=True,
         n_iters=200,
     ),
+    # bf16 prefill at 16K tokens per call, S = 512 to 16384, for throughput against length.
+    "prefill_seqlen": Suite(
+        kind="prefill",
+        configs=tuple(P(16384 // s, 32, 32, s, 128) for s in (512, 1024, 2048, 4096, 8192, 16384)),
+        dtypes=("bf16",),
+        impls=("mma", "mma_pipelined", "triton", "sdpa_flash", "sdpa_cudnn", "flash_attn"),
+    ),
+    # Decode with Llama-3.2-1B's head shape: 32 query heads, 8 KV heads, D = 64.
+    "decode_d64": Suite(
+        kind="decode",
+        configs=tuple(D(b, 32, 8, ctx, 64) for b in (1, 8) for ctx in (2048, 8192, 32768)),
+        dtypes=("bf16",),
+        impls=DECODE_IMPLS,
+        causal=(False,),
+        flush_l2=True,
+        n_iters=200,
+    ),
+    # One sequence at 64K and 128K keys, the context lengths Llama 3.1 supports.
+    "decode_long": Suite(
+        kind="decode",
+        configs=tuple(D(1, 32, hkv, ctx, 128) for hkv in (32, 8) for ctx in (65536, 131072)),
+        dtypes=("bf16",),
+        impls=DECODE_IMPLS,
+        causal=(False,),
+        flush_l2=True,
+        n_iters=200,
+    ),
     "decode_batch": Suite(
         kind="decode",
         configs=tuple(D(batch, 32, 8, 2048, 128) for batch in (1, 4, 16, 64)),
