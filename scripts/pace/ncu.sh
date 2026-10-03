@@ -7,8 +7,9 @@
 #   scripts/pace/ncu.sh mma-s4096 mma_attention -m bench.run --suite prefill_bf16 \
 #       --impls mma --configs 1 --causal false --n-iters 12 --out-dir runs/bench
 # Timings taken under the profiler are not results, hence --out-dir runs/bench for bench.run.
-# NCU_SKIP (default 10) launches of the matching kernel are skipped first, so the profiled launch
-# is a warm one.
+# NCU_SKIP (default 10) launches of the matching kernels are skipped first, so the profiled launch
+# is a warm one; NCU_COUNT (default 1) launches are profiled, for implementations that launch
+# several kernels per call.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 source scripts/pace/env.sh
@@ -23,7 +24,7 @@ mkdir -p "$out_dir"
 
 profile() {
   ncu --set full --import-source yes --kernel-name "regex:$regex" --launch-skip "${NCU_SKIP:-10}" \
-    --launch-count 1 --force-overwrite --export "$RUN_DIR/$report" python "$@"
+    --launch-count "${NCU_COUNT:-1}" --force-overwrite --export "$RUN_DIR/$report" python "$@"
   ncu --import "$RUN_DIR/$report.ncu-rep" --page raw --csv >"$out_dir/$report.csv"
   python scripts/pace/ncu_digest.py "$out_dir/$report.csv" >"$out_dir/$report.md"
   cat "$out_dir/$report.md"

@@ -3,6 +3,7 @@
 import pytest
 
 from bench import baselines, flops, suites
+from bench import summarize as final
 from bench.run import gpu_slug, summarize
 
 
@@ -39,3 +40,23 @@ def test_suites_are_well_formed(name, suite):
     known |= {"triton", "naive", "fp32_regtile", "decode_copy", "decode_inplace"}
     known |= {"splitkv"}
     assert set(suite.impls) <= known
+
+
+def test_final_summary_takes_ratios_within_each_run():
+    config = {"batch": 1, "heads": 2, "heads_kv": 2, "seqlen": 128, "head_dim": 64}
+    config.update(dtype="bfloat16", causal=False)
+
+    def run(flash_ms, mma_ms):
+        results = [
+            {"config": config, "impl": impl, "status": "ok", "op_ms": {"median": ms}, "flops": 1e9}
+            for impl, ms in (("flash_attn", flash_ms), ("mma", mma_ms))
+        ]
+        env = {"git_sha": "abc1234", "git_dirty": False, "gpu": "NVIDIA H100 80GB HBM3"}
+        return {"suite": "prefill_bf16", "kind": "prefill", "env": env, "results": results}
+
+    rows = final.kernel_suites([run(1.0, 2.0), run(2.0, 2.0), run(1.5, 3.0)])["prefill_bf16"]
+    mma = next(row for row in rows["rows"] if row["impl"] == "mma")
+    assert mma["ms"] == {"median": 2.0, "min": 2.0, "max": 3.0}
+    # Per run 0.5, 1.0, 0.5: the median of the ratios, not the ratio of the medians (0.75).
+    assert mma["vs_flash_attn"] == {"median": 0.5, "min": 0.5, "max": 1.0}
+    assert mma["tflops"] == pytest.approx(0.5)
