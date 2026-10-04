@@ -10,7 +10,14 @@ one; they describe a single cold launch, not the benchmarked time.
 import csv
 import re
 
-from bench.plot import POINTS, REPORTS, UNITS
+from bench.plot import POINTS, REPORTS, UNITS, Point
+
+# Digests that are not on the roofline: causal prefill at the same shape.
+CAUSAL = [
+    Point("mma-pipelined-s4096-causal", "mma_pipelined, causal", "", "", (), 2),
+    Point("triton-s4096-causal", "triton, causal", "", "", (), 2),
+    Point("flash-attn-s4096-causal", "flash-attn, causal", "", "", (), 2, False),
+]
 
 STALL = re.compile(r"smsp__average_warps_issue_stalled_(\w+)_per_issue_active\.ratio")
 
@@ -34,7 +41,7 @@ def kernel_name(full: str) -> str:
 
 def rows() -> list[list[str]]:
     table = []
-    for point in POINTS:
+    for point in [*POINTS, *CAUSAL]:
         path = REPORTS / f"{point.report}.csv"
         if not path.exists():
             continue
