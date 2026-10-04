@@ -1,0 +1,362 @@
+{
+ "schema": 1,
+ "suite": "e2e_llama",
+ "kind": "e2e",
+ "env": {
+  "date": "2026-10-03T07:16:12+00:00",
+  "host": "atl1-1-03-013-8-0.pace.gatech.edu",
+  "slurm_job": "6089230",
+  "git_sha": "cc64b18dfbabc4b071e7025403a4da3f28678ec9",
+  "git_dirty": false,
+  "machine": {
+   "os": "Linux-5.14.0-570.128.1.el9_6.x86_64-x86_64-with-glibc2.34",
+   "logical_cpus": 64,
+   "cpu": "Intel(R) Xeon(R) Platinum 8462Y+",
+   "cpu_sockets": 2,
+   "cpus_available": 8,
+   "mem_gb": 2015.0,
+   "slurm_cpus": "8",
+   "slurm_mem_mb": "65536"
+  },
+  "python": "3.12.12",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "triton": "3.4.0",
+  "flash_attn": "2.8.3.post1",
+  "transformers": "4.57.6",
+  "flash_lab_env": {},
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "compute_capability": "9.0",
+  "sm_count": 132,
+  "mem_gb": 79.2,
+  "driver": "595.71.05",
+  "clocks_mhz": {
+   "sm": "840",
+   "mem": "2619",
+   "max_sm": "1980",
+   "max_mem": "2619"
+  }
+ },
+ "model": "meta-llama/Llama-3.1-8B-Instruct",
+ "model_revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+ "dtype": "bfloat16",
+ "cache": "static",
+ "n_warmup": 2,
+ "runs": 3,
+ "seed": 0,
+ "tag": "final1",
+ "results": [
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 24.562221951782703,
+    "min": 24.454405531287193,
+    "max": 24.791167117655277
+   },
+   "decode_step_ms": {
+    "median": 10.443311184644699,
+    "p10": 10.304181091487408,
+    "p90": 10.565068945288658
+   },
+   "decode_tokens_per_s": 95.75507062073837,
+   "gpu_during_timing": {
+    "samples": 162,
+    "sm_mhz": {
+     "min": 1980.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 370.05,
+     "median": 376.32,
+     "max": 382.76
+    },
+    "temp_c": {
+     "min": 44.0,
+     "median": 45.0,
+     "max": 46.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.06447744369506836,
+   "max_logit_err_torch_vs_fp32": 0.05789041519165039,
+   "fp32_top2_margin": 0.25334930419921875,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 8192,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 523.3034482225776,
+    "min": 521.3087853044271,
+    "max": 524.505602195859
+   },
+   "decode_step_ms": {
+    "median": 22.849473170936108,
+    "p10": 22.666944935917854,
+    "p90": 23.085865937173367
+   },
+   "decode_tokens_per_s": 43.76468518635134,
+   "gpu_during_timing": {
+    "samples": 381,
+    "sm_mhz": {
+     "min": 1845.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 337.26,
+     "median": 341.71,
+     "max": 522.64
+    },
+    "temp_c": {
+     "min": 47.0,
+     "median": 48.0,
+     "max": 59.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.09434700012207031,
+   "max_logit_err_torch_vs_fp32": 0.10331535339355469,
+   "fp32_top2_margin": 0.04459881782531738,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_attention_2",
+   "status": "incorrect",
+   "max_logit_err_vs_fp32": 13.241538524627686,
+   "max_logit_err_torch_vs_fp32": 0.05789041519165039,
+   "fp32_top2_margin": 0.25334930419921875
+  },
+  {
+   "config": {
+    "prompt_len": 8192,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_attention_2",
+   "status": "incorrect",
+   "max_logit_err_vs_fp32": 2.615884780883789,
+   "max_logit_err_torch_vs_fp32": 0.10331535339355469,
+   "fp32_top2_margin": 0.04459881782531738
+  },
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 28.665749356150627,
+    "min": 28.490757569670677,
+    "max": 28.717543929815292
+   },
+   "decode_step_ms": {
+    "median": 8.253899402916431,
+    "p10": 8.226799592375755,
+    "p90": 8.282691426575184
+   },
+   "decode_tokens_per_s": 121.15485677553329,
+   "gpu_during_timing": {
+    "samples": 128,
+    "sm_mhz": {
+     "min": 1980.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 398.42,
+     "median": 401.115,
+     "max": 409.06
+    },
+    "temp_c": {
+     "min": 47.0,
+     "median": 48.0,
+     "max": 50.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.0644078254699707,
+   "max_logit_err_torch_vs_fp32": 0.05789041519165039,
+   "fp32_top2_margin": 0.25334930419921875,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 8192,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 275.5347825586796,
+    "min": 275.25176759809256,
+    "max": 276.3515915721655
+   },
+   "decode_step_ms": {
+    "median": 9.405593387782574,
+    "p10": 9.369842149317265,
+    "p90": 9.64240562170744
+   },
+   "decode_tokens_per_s": 106.31971410745369,
+   "gpu_during_timing": {
+    "samples": 162,
+    "sm_mhz": {
+     "min": 1680.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 396.9,
+     "median": 404.76,
+     "max": 496.92
+    },
+    "temp_c": {
+     "min": 50.0,
+     "median": 51.0,
+     "max": 60.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.0738224983215332,
+   "max_logit_err_torch_vs_fp32": 0.10331535339355469,
+   "fp32_top2_margin": 0.04459881782531738,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 23.13839178532362,
+    "min": 23.1033219024539,
+    "max": 23.241610266268253
+   },
+   "decode_step_ms": {
+    "median": 8.216219954192638,
+    "p10": 8.191635273396969,
+    "p90": 8.24179407209158
+   },
+   "decode_tokens_per_s": 121.71047094347955,
+   "gpu_during_timing": {
+    "samples": 127,
+    "sm_mhz": {
+     "min": 1980.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 403.39,
+     "median": 405.08,
+     "max": 410.33
+    },
+    "temp_c": {
+     "min": 49.0,
+     "median": 49.0,
+     "max": 52.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.06721353530883789,
+   "max_logit_err_torch_vs_fp32": 0.05789041519165039,
+   "fp32_top2_margin": 0.25334930419921875,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 8192,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 311.2036567181349,
+    "min": 311.1542034894228,
+    "max": 312.3180065304041
+   },
+   "decode_step_ms": {
+    "median": 9.352145716547966,
+    "p10": 9.334360621869564,
+    "p90": 9.371514618396759
+   },
+   "decode_tokens_per_s": 106.92733307507925,
+   "gpu_during_timing": {
+    "samples": 162,
+    "sm_mhz": {
+     "min": 1710.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 401.9,
+     "median": 404.99,
+     "max": 511.41
+    },
+    "temp_c": {
+     "min": 50.0,
+     "median": 50.0,
+     "max": 59.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.0991048812866211,
+   "max_logit_err_torch_vs_fp32": 0.10331535339355469,
+   "fp32_top2_margin": 0.04459881782531738,
+   "compared_with": "sdpa",
+   "first_token_difference": 0
+  }
+ ]
+}
