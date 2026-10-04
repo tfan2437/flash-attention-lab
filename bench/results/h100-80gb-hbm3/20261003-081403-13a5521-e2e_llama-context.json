@@ -1,0 +1,614 @@
+{
+ "schema": 1,
+ "suite": "e2e_llama",
+ "kind": "e2e",
+ "env": {
+  "date": "2026-10-03T08:06:22+00:00",
+  "host": "atl1-1-03-013-8-0.pace.gatech.edu",
+  "slurm_job": "6089230",
+  "git_sha": "13a5521c2862465e7d1fced18a3a69cdd8ca7177",
+  "git_dirty": false,
+  "machine": {
+   "os": "Linux-5.14.0-570.128.1.el9_6.x86_64-x86_64-with-glibc2.34",
+   "logical_cpus": 64,
+   "cpu": "Intel(R) Xeon(R) Platinum 8462Y+",
+   "cpu_sockets": 2,
+   "cpus_available": 8,
+   "mem_gb": 2015.0,
+   "slurm_cpus": "8",
+   "slurm_mem_mb": "65536"
+  },
+  "python": "3.12.12",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "triton": "3.4.0",
+  "flash_attn": "2.8.3.post1",
+  "transformers": "4.57.6",
+  "flash_lab_env": {},
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "compute_capability": "9.0",
+  "sm_count": 132,
+  "mem_gb": 79.2,
+  "driver": "595.71.05",
+  "clocks_mhz": {
+   "sm": "345",
+   "mem": "2619",
+   "max_sm": "1980",
+   "max_mem": "2619"
+  }
+ },
+ "model": "meta-llama/Llama-3.1-8B-Instruct",
+ "model_revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+ "dtype": "bfloat16",
+ "cache": "static",
+ "n_warmup": 2,
+ "runs": 3,
+ "seed": 0,
+ "tag": "context",
+ "results": [
+  {
+   "config": {
+    "prompt_len": 2048,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 82.48868770897388,
+    "min": 82.09495805203915,
+    "max": 83.39691441506147
+   },
+   "decode_step_ms": {
+    "median": 12.808425351977348,
+    "p10": 12.643095850944519,
+    "p90": 12.905450537800789
+   },
+   "decode_tokens_per_s": 78.07360955932192,
+   "gpu_during_timing": {
+    "samples": 201,
+    "sm_mhz": {
+     "min": 1770.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 368.92,
+     "median": 376.89,
+     "max": 405.56
+    },
+    "temp_c": {
+     "min": 46.0,
+     "median": 47.0,
+     "max": 53.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.06859874725341797,
+   "max_logit_err_torch_vs_fp32": 0.07123184204101562,
+   "fp32_top2_margin": 0.01112276315689087,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 4096,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 194.15375590324402,
+    "min": 193.99838149547577,
+    "max": 194.18056029826403
+   },
+   "decode_step_ms": {
+    "median": 16.14039856940508,
+    "p10": 15.926299430429935,
+    "p90": 16.367591358721256
+   },
+   "decode_tokens_per_s": 61.95633866784116,
+   "gpu_during_timing": {
+    "samples": 258,
+    "sm_mhz": {
+     "min": 1830.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 352.87,
+     "median": 367.58,
+     "max": 444.64
+    },
+    "temp_c": {
+     "min": 48.0,
+     "median": 50.0,
+     "max": 58.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.05666637420654297,
+   "max_logit_err_torch_vs_fp32": 0.056934356689453125,
+   "fp32_top2_margin": 0.1827157735824585,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 16384,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 1617.3938447609544,
+    "min": 1610.6591569259763,
+    "max": 1618.547571823001
+   },
+   "decode_step_ms": {
+    "median": 35.34967266023159,
+    "p10": 35.260708816349506,
+    "p90": 35.52968017756939
+   },
+   "decode_tokens_per_s": 28.288805093377874,
+   "gpu_during_timing": {
+    "samples": 638,
+    "sm_mhz": {
+     "min": 1830.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 342.41,
+     "median": 348.28,
+     "max": 667.42
+    },
+    "temp_c": {
+     "min": 51.0,
+     "median": 54.0,
+     "max": 67.0
+    }
+   },
+   "logit_check": "skipped: prompt longer than --check-max-len",
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 32768,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 5482.979669235647,
+    "min": 5476.773355156183,
+    "max": 5488.395878113806
+   },
+   "decode_step_ms": {
+    "median": 60.75349077582359,
+    "p10": 60.63247639685869,
+    "p90": 60.9377471730113
+   },
+   "decode_tokens_per_s": 16.459959538620332,
+   "gpu_during_timing": {
+    "samples": 1257,
+    "sm_mhz": {
+     "min": 1560.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 341.67,
+     "median": 346.38,
+     "max": 667.26
+    },
+    "temp_c": {
+     "min": 55.0,
+     "median": 56.0,
+     "max": 71.0
+    }
+   },
+   "logit_check": "skipped: prompt longer than --check-max-len",
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 2048,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 68.84864438325167,
+    "min": 68.84095259010792,
+    "max": 69.10349149256945
+   },
+   "decode_step_ms": {
+    "median": 8.377750404179096,
+    "p10": 8.358944952487946,
+    "p90": 8.398452214896679
+   },
+   "decode_tokens_per_s": 119.36378523537384,
+   "gpu_during_timing": {
+    "samples": 132,
+    "sm_mhz": {
+     "min": 1935.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 418.25,
+     "median": 421.89,
+     "max": 440.8
+    },
+    "temp_c": {
+     "min": 54.0,
+     "median": 55.0,
+     "max": 58.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.059061527252197266,
+   "max_logit_err_torch_vs_fp32": 0.07123184204101562,
+   "fp32_top2_margin": 0.01112276315689087,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 4096,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 131.62575755268335,
+    "min": 131.5153930336237,
+    "max": 134.5045855268836
+   },
+   "decode_step_ms": {
+    "median": 8.426152169704437,
+    "p10": 8.407377265393734,
+    "p90": 8.449476584792137
+   },
+   "decode_tokens_per_s": 118.67813206547834,
+   "gpu_during_timing": {
+    "samples": 137,
+    "sm_mhz": {
+     "min": 1560.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 444.98,
+     "median": 449.6,
+     "max": 487.24
+    },
+    "temp_c": {
+     "min": 57.0,
+     "median": 58.0,
+     "max": 65.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.07012104988098145,
+   "max_logit_err_torch_vs_fp32": 0.056934356689453125,
+   "fp32_top2_margin": 0.1827157735824585,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 16384,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 634.3533247709274,
+    "min": 630.6137759238482,
+    "max": 635.9704434871674
+   },
+   "decode_step_ms": {
+    "median": 11.686504818499088,
+    "p10": 11.627883836627007,
+    "p90": 11.750622652471066
+   },
+   "decode_tokens_per_s": 85.56878344131219,
+   "gpu_during_timing": {
+    "samples": 217,
+    "sm_mhz": {
+     "min": 1575.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 385.39,
+     "median": 388.99,
+     "max": 600.25
+    },
+    "temp_c": {
+     "min": 58.0,
+     "median": 58.0,
+     "max": 69.0
+    }
+   },
+   "logit_check": "skipped: prompt longer than --check-max-len",
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 32768,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 1587.212403304875,
+    "min": 1582.7574664726853,
+    "max": 1590.6573543325067
+   },
+   "decode_step_ms": {
+    "median": 14.312510378658772,
+    "p10": 14.269537478685379,
+    "p90": 14.337190240621567
+   },
+   "decode_tokens_per_s": 69.86894496796936,
+   "gpu_during_timing": {
+    "samples": 314,
+    "sm_mhz": {
+     "min": 1530.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 378.26,
+     "median": 388.07,
+     "max": 698.57
+    },
+    "temp_c": {
+     "min": 58.0,
+     "median": 60.0,
+     "max": 73.0
+    }
+   },
+   "logit_check": "skipped: prompt longer than --check-max-len",
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 2048,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 68.01178492605686,
+    "min": 67.38117802888155,
+    "max": 68.68702452629805
+   },
+   "decode_step_ms": {
+    "median": 8.345824666321278,
+    "p10": 8.32540076225996,
+    "p90": 8.366462215781212
+   },
+   "decode_tokens_per_s": 119.82039402713524,
+   "gpu_during_timing": {
+    "samples": 132,
+    "sm_mhz": {
+     "min": 1740.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 419.26,
+     "median": 422.555,
+     "max": 444.8
+    },
+    "temp_c": {
+     "min": 57.0,
+     "median": 57.0,
+     "max": 60.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.0643467903137207,
+   "max_logit_err_torch_vs_fp32": 0.07123184204101562,
+   "fp32_top2_margin": 0.01112276315689087,
+   "compared_with": "sdpa",
+   "first_token_difference": 0
+  },
+  {
+   "config": {
+    "prompt_len": 4096,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 139.90006688982248,
+    "min": 138.1863597780466,
+    "max": 140.27899969369173
+   },
+   "decode_step_ms": {
+    "median": 8.390909060835838,
+    "p10": 8.372730761766434,
+    "p90": 8.417906425893307
+   },
+   "decode_tokens_per_s": 119.17659847696974,
+   "gpu_during_timing": {
+    "samples": 137,
+    "sm_mhz": {
+     "min": 1725.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 443.69,
+     "median": 450.51,
+     "max": 493.05
+    },
+    "temp_c": {
+     "min": 59.0,
+     "median": 60.0,
+     "max": 67.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.05632972717285156,
+   "max_logit_err_torch_vs_fp32": 0.056934356689453125,
+   "fp32_top2_margin": 0.1827157735824585,
+   "compared_with": "sdpa",
+   "first_token_difference": 3
+  },
+  {
+   "config": {
+    "prompt_len": 16384,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 781.963748857379,
+    "min": 780.3712710738182,
+    "max": 781.9704404100776
+   },
+   "decode_step_ms": {
+    "median": 11.599709279835224,
+    "p10": 11.582899652421474,
+    "p90": 11.619731970131397
+   },
+   "decode_tokens_per_s": 86.20905713028397,
+   "gpu_during_timing": {
+    "samples": 224,
+    "sm_mhz": {
+     "min": 1665.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 389.0,
+     "median": 392.77,
+     "max": 652.0
+    },
+    "temp_c": {
+     "min": 59.0,
+     "median": 60.0,
+     "max": 72.0
+    }
+   },
+   "logit_check": "skipped: prompt longer than --check-max-len",
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 32768,
+    "batch": 1,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 2235.0747771561146,
+    "min": 2229.445037432015,
+    "max": 2238.749962300062
+   },
+   "decode_step_ms": {
+    "median": 14.144263230264187,
+    "p10": 14.121595956385136,
+    "p90": 14.167084358632565
+   },
+   "decode_tokens_per_s": 70.70004168618135,
+   "gpu_during_timing": {
+    "samples": 350,
+    "sm_mhz": {
+     "min": 1575.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 325.68,
+     "median": 456.46,
+     "max": 691.2
+    },
+    "temp_c": {
+     "min": 57.0,
+     "median": 60.0,
+     "max": 74.0
+    }
+   },
+   "logit_check": "skipped: prompt longer than --check-max-len",
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  }
+ ]
+}

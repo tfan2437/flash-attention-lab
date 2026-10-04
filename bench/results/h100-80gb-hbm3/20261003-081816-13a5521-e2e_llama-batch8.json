@@ -1,0 +1,338 @@
+{
+ "schema": 1,
+ "suite": "e2e_llama",
+ "kind": "e2e",
+ "env": {
+  "date": "2026-10-03T08:14:14+00:00",
+  "host": "atl1-1-03-013-8-0.pace.gatech.edu",
+  "slurm_job": "6089230",
+  "git_sha": "13a5521c2862465e7d1fced18a3a69cdd8ca7177",
+  "git_dirty": false,
+  "machine": {
+   "os": "Linux-5.14.0-570.128.1.el9_6.x86_64-x86_64-with-glibc2.34",
+   "logical_cpus": 64,
+   "cpu": "Intel(R) Xeon(R) Platinum 8462Y+",
+   "cpu_sockets": 2,
+   "cpus_available": 8,
+   "mem_gb": 2015.0,
+   "slurm_cpus": "8",
+   "slurm_mem_mb": "65536"
+  },
+  "python": "3.12.12",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "triton": "3.4.0",
+  "flash_attn": "2.8.3.post1",
+  "transformers": "4.57.6",
+  "flash_lab_env": {},
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "compute_capability": "9.0",
+  "sm_count": 132,
+  "mem_gb": 79.2,
+  "driver": "595.71.05",
+  "clocks_mhz": {
+   "sm": "345",
+   "mem": "2619",
+   "max_sm": "1980",
+   "max_mem": "2619"
+  }
+ },
+ "model": "meta-llama/Llama-3.1-8B-Instruct",
+ "model_revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+ "dtype": "bfloat16",
+ "cache": "static",
+ "n_warmup": 2,
+ "runs": 3,
+ "seed": 0,
+ "tag": "batch8",
+ "results": [
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 8,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 136.1984210088849,
+    "min": 134.8393401131034,
+    "max": 136.33427489548922
+   },
+   "decode_step_ms": {
+    "median": 12.400059029459953,
+    "p10": 12.247738055884838,
+    "p90": 12.511342018842697
+   },
+   "decode_tokens_per_s": 645.1582190853825,
+   "gpu_during_timing": {
+    "samples": 198,
+    "sm_mhz": {
+     "min": 1650.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 466.02,
+     "median": 475.16,
+     "max": 504.82
+    },
+    "temp_c": {
+     "min": 56.0,
+     "median": 58.0,
+     "max": 65.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.09948921203613281,
+   "max_logit_err_torch_vs_fp32": 0.1640911102294922,
+   "fp32_top2_margin": 0.02034783363342285,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 4096,
+    "batch": 8,
+    "new_tokens": 256
+   },
+   "impl": "sdpa",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 1587.111258879304,
+    "min": 1583.025417290628,
+    "max": 1594.1169206053019
+   },
+   "decode_step_ms": {
+    "median": 25.710334070026875,
+    "p10": 25.5318995565176,
+    "p90": 25.80669578164816
+   },
+   "decode_tokens_per_s": 311.1589284764061,
+   "gpu_during_timing": {
+    "samples": 488,
+    "sm_mhz": {
+     "min": 1590.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 600.12,
+     "median": 605.3,
+     "max": 672.46
+    },
+    "temp_c": {
+     "min": 64.0,
+     "median": 66.0,
+     "max": 73.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.10581952333450317,
+   "max_logit_err_torch_vs_fp32": 0.1584615707397461,
+   "fp32_top2_margin": 0.012080907821655273,
+   "compared_with": "sdpa",
+   "first_token_difference": null
+  },
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 8,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 124.12690836936235,
+    "min": 123.83510638028383,
+    "max": 125.4010871052742
+   },
+   "decode_step_ms": {
+    "median": 8.909439668059349,
+    "p10": 8.880759216845036,
+    "p90": 8.944064751267433
+   },
+   "decode_tokens_per_s": 897.9240331667858,
+   "gpu_during_timing": {
+    "samples": 144,
+    "sm_mhz": {
+     "min": 1575.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 433.78,
+     "median": 450.8,
+     "max": 489.4
+    },
+    "temp_c": {
+     "min": 56.0,
+     "median": 57.0,
+     "max": 64.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.10159111022949219,
+   "max_logit_err_torch_vs_fp32": 0.1640911102294922,
+   "fp32_top2_margin": 0.02034783363342285,
+   "compared_with": "sdpa",
+   "first_token_difference": 6
+  },
+  {
+   "config": {
+    "prompt_len": 4096,
+    "batch": 8,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 1046.6758459806442,
+    "min": 1045.9009353071451,
+    "max": 1047.8573255240917
+   },
+   "decode_step_ms": {
+    "median": 13.552841730415821,
+    "p10": 13.417750038206577,
+    "p90": 13.585669919848442
+   },
+   "decode_tokens_per_s": 590.2821090315018,
+   "gpu_during_timing": {
+    "samples": 270,
+    "sm_mhz": {
+     "min": 1290.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 403.3,
+     "median": 407.72,
+     "max": 712.22
+    },
+    "temp_c": {
+     "min": 58.0,
+     "median": 60.0,
+     "max": 72.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.10669851303100586,
+   "max_logit_err_torch_vs_fp32": 0.1584615707397461,
+   "fp32_top2_margin": 0.012080907821655273,
+   "compared_with": "sdpa",
+   "first_token_difference": 3
+  },
+  {
+   "config": {
+    "prompt_len": 512,
+    "batch": 8,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 120.97110133618116,
+    "min": 120.2439684420824,
+    "max": 122.27535247802734
+   },
+   "decode_step_ms": {
+    "median": 8.8810371235013,
+    "p10": 8.851594664156437,
+    "p90": 8.913852460682392
+   },
+   "decode_tokens_per_s": 900.7956941008758,
+   "gpu_during_timing": {
+    "samples": 143,
+    "sm_mhz": {
+     "min": 1590.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 443.58,
+     "median": 452.12,
+     "max": 490.66
+    },
+    "temp_c": {
+     "min": 58.0,
+     "median": 59.0,
+     "max": 66.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.1640911102294922,
+   "max_logit_err_torch_vs_fp32": 0.1640911102294922,
+   "fp32_top2_margin": 0.02034783363342285,
+   "compared_with": "sdpa",
+   "first_token_difference": 0
+  },
+  {
+   "config": {
+    "prompt_len": 4096,
+    "batch": 8,
+    "new_tokens": 256
+   },
+   "impl": "flash_lab_cuda",
+   "status": "ok",
+   "ttft_ms": {
+    "median": 1122.904371470213,
+    "min": 1117.9446941241622,
+    "max": 1125.32764300704
+   },
+   "decode_step_ms": {
+    "median": 13.483372516930103,
+    "p10": 13.384708389639854,
+    "p90": 13.552056439220905
+   },
+   "decode_tokens_per_s": 593.3233684640081,
+   "gpu_during_timing": {
+    "samples": 273,
+    "sm_mhz": {
+     "min": 1305.0,
+     "median": 1980.0,
+     "max": 1980.0
+    },
+    "mem_mhz": {
+     "min": 2619.0,
+     "median": 2619.0,
+     "max": 2619.0
+    },
+    "power_w": {
+     "min": 401.86,
+     "median": 408.42,
+     "max": 718.59
+    },
+    "temp_c": {
+     "min": 58.0,
+     "median": 59.0,
+     "max": 70.0
+    }
+   },
+   "max_logit_err_vs_fp32": 0.0959615707397461,
+   "max_logit_err_torch_vs_fp32": 0.1584615707397461,
+   "fp32_top2_margin": 0.012080907821655273,
+   "compared_with": "sdpa",
+   "first_token_difference": 13
+  }
+ ]
+}
