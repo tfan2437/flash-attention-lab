@@ -70,12 +70,23 @@ POINTS = [
     Point("fp32-regtile-s4096-full", "fp32_regtile", "prefill_fp32", "fp32_regtile", PREFILL, 4),
     Point("mma-s4096-full", "mma", "prefill_bf16", "mma", PREFILL, 2),
     Point("mma-pipelined-s4096-full", "mma_pipelined", "prefill_bf16", "mma_pipelined", PREFILL, 2),
-    Point("triton-s4096-full", "triton", "prefill_bf16", "triton", PREFILL, 2),
-    Point("flash-attn-s4096-full", "flash-attn", "prefill_bf16", "flash_attn", PREFILL, 2, False),
+    Point("triton-s4096-full", "triton", "prefill_bf16", "triton", PREFILL, 2, label_offset=(6, 6)),
+    Point(
+        "flash-attn-s4096-full",
+        "flash-attn",
+        "prefill_bf16",
+        "flash_attn",
+        PREFILL,
+        2,
+        False,
+        label_offset=(-50, -3),
+    ),
     Point(
         "decode-inplace-b1-ctx32k", "decode_inplace", "decode_ctx", "decode_inplace", DECODE_1, 2
     ),
-    Point("splitkv-b1-ctx32k", "splitkv", "decode_ctx", "splitkv", DECODE_1, 2),
+    Point(
+        "splitkv-b1-ctx32k", "splitkv", "decode_ctx", "splitkv", DECODE_1, 2, label_offset=(6, -11)
+    ),
     Point(
         "flash-attn-decode-b1-ctx32k", "flash-attn", "decode_ctx", "flash_attn", DECODE_1, 2, False
     ),
@@ -256,6 +267,9 @@ def roofline(summary: dict, theme: str, path: Path) -> list[dict]:
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, facecolor=colors["surface"])
     plt.close(fig)
+    if path.suffix == ".svg":  # matplotlib leaves trailing spaces, which the repo's hooks reject
+        text = path.read_text()
+        path.write_text("\n".join(line.rstrip() for line in text.splitlines()) + "\n")
     return table
 
 
