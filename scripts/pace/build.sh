@@ -12,7 +12,9 @@ build() {
 }
 
 run_logged build build "$@"
-grep -E "ptxas (info|warning)" "$RUN_DIR/stdout.log" >"$RUN_DIR/ptxas.txt" || true
+# Spills are reported on their own line ("N bytes stack frame, N bytes spill stores, ..."), so keep
+# those next to the ptxas info lines.
+grep -E "ptxas (info|warning)|bytes stack frame" "$RUN_DIR/stdout.log" >"$RUN_DIR/ptxas.txt" || true
 mkdir -p profiling/ptxas
 cp "$RUN_DIR/ptxas.txt" "profiling/ptxas/${GIT_SHA}.txt"
 echo "ptxas summary: profiling/ptxas/${GIT_SHA}.txt ($(wc -l <"$RUN_DIR/ptxas.txt") lines)"

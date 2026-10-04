@@ -1,336 +1,442 @@
 ptxas info    : 10 bytes gmem, 80 bytes cmem[4]
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__203516bc_8_smoke_cu_d94b87ec11axpy_kernelEPKfS2_fPfl' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__203516bc_8_smoke_cu_d94b87ec11axpy_kernelEPKfS2_fPfl
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 12 registers, used 0 barriers, 392 bytes cmem[0]
 ptxas info    : 10 bytes gmem
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__203516bc_8_smoke_cu_d94b87ec11axpy_kernelEPKfS2_fPfl' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__203516bc_8_smoke_cu_d94b87ec11axpy_kernelEPKfS2_fPfl
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 12 registers, used 0 barriers
 ptxas info    : 10 bytes gmem, 80 bytes cmem[4]
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__5eb7536a_16_mma_tile_test_cu_a1367f2115mma_tile_kernelILb0EEEvPK13__nv_bfloat16S4_Pfi' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__5eb7536a_16_mma_tile_test_cu_a1367f2115mma_tile_kernelILb0EEEvPK13__nv_bfloat16S4_Pfi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 31 registers, used 0 barriers, 4608 bytes smem, 380 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__5eb7536a_16_mma_tile_test_cu_a1367f2115mma_tile_kernelILb1EEEvPK13__nv_bfloat16S4_Pfi' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__5eb7536a_16_mma_tile_test_cu_a1367f2115mma_tile_kernelILb1EEEvPK13__nv_bfloat16S4_Pfi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 31 registers, used 0 barriers, 5376 bytes smem, 380 bytes cmem[0]
 ptxas info    : 10 bytes gmem
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__5eb7536a_16_mma_tile_test_cu_a1367f2115mma_tile_kernelILb0EEEvPK13__nv_bfloat16S4_Pfi' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__5eb7536a_16_mma_tile_test_cu_a1367f2115mma_tile_kernelILb0EEEvPK13__nv_bfloat16S4_Pfi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 31 registers, used 0 barriers, 4608 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__5eb7536a_16_mma_tile_test_cu_a1367f2115mma_tile_kernelILb1EEEvPK13__nv_bfloat16S4_Pfi' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__5eb7536a_16_mma_tile_test_cu_a1367f2115mma_tile_kernelILb1EEEvPK13__nv_bfloat16S4_Pfi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 32 registers, used 0 barriers, 5376 bytes smem
 ptxas info    : 10 bytes gmem, 80 bytes cmem[4]
 ptxas info    : Compiling entry function '_ZN9flash_lab48_GLOBAL__N__f89aebfa_15_fp32_regtile_cu_c0eb3ccc19fp32_regtile_kernelILi128EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab48_GLOBAL__N__f89aebfa_15_fp32_regtile_cu_c0eb3ccc19fp32_regtile_kernelILi128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 232 registers, used 1 barriers, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab48_GLOBAL__N__f89aebfa_15_fp32_regtile_cu_c0eb3ccc19fp32_regtile_kernelILi64EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab48_GLOBAL__N__f89aebfa_15_fp32_regtile_cu_c0eb3ccc19fp32_regtile_kernelILi64EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 184 registers, used 1 barriers, 536 bytes cmem[0]
 ptxas info    : 10 bytes gmem
 ptxas info    : Compiling entry function '_ZN9flash_lab48_GLOBAL__N__f89aebfa_15_fp32_regtile_cu_c0eb3ccc19fp32_regtile_kernelILi128EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab48_GLOBAL__N__f89aebfa_15_fp32_regtile_cu_c0eb3ccc19fp32_regtile_kernelILi128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 254 registers, used 1 barriers
 ptxas info    : Compiling entry function '_ZN9flash_lab48_GLOBAL__N__f89aebfa_15_fp32_regtile_cu_c0eb3ccc19fp32_regtile_kernelILi64EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab48_GLOBAL__N__f89aebfa_15_fp32_regtile_cu_c0eb3ccc19fp32_regtile_kernelILi64EEEvNS_10AttnParamsE
+    16 bytes stack frame, 12 bytes spill stores, 28 bytes spill loads
 ptxas info    : Used 168 registers, used 1 barriers, 16 bytes cumulative stack size
 ptxas info    : 10 bytes gmem, 80 bytes cmem[4]
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelIfLi128EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelIfLi128EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 85 registers, used 1 barriers, 34312 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelIfLi64EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelIfLi64EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 69 registers, used 1 barriers, 17416 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI6__halfLi128EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI6__halfLi128EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 85 registers, used 1 barriers, 34312 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI6__halfLi64EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI6__halfLi64EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 69 registers, used 1 barriers, 17416 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI13__nv_bfloat16Li128EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI13__nv_bfloat16Li128EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 85 registers, used 1 barriers, 34312 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI13__nv_bfloat16Li64EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI13__nv_bfloat16Li64EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 69 registers, used 1 barriers, 17416 bytes smem, 536 bytes cmem[0]
 ptxas info    : 10 bytes gmem
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelIfLi128EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelIfLi128EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 94 registers, used 1 barriers, 34312 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelIfLi64EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelIfLi64EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 80 registers, used 1 barriers, 17416 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI6__halfLi128EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI6__halfLi128EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 94 registers, used 1 barriers, 34312 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI6__halfLi64EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI6__halfLi64EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 80 registers, used 1 barriers, 17416 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI13__nv_bfloat16Li128EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI13__nv_bfloat16Li128EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 94 registers, used 1 barriers, 34312 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI13__nv_bfloat16Li64EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab47_GLOBAL__N__4f353ca3_14_decode_copy_cu_06c21c2c18decode_copy_kernelI13__nv_bfloat16Li64EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 80 registers, used 1 barriers, 17416 bytes smem
 ptxas info    : 10 bytes gmem, 80 bytes cmem[4]
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi8ELi32EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi8ELi32EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 80 registers, used 1 barriers, 42400 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi16ELi16EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi16ELi16EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 64 registers, used 1 barriers, 34240 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi32ELi8EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi32ELi8EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 74 registers, used 1 barriers, 42688 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi8ELi32EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi8ELi32EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 60 registers, used 1 barriers, 21920 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi16ELi16EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi16ELi16EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 64 registers, used 1 barriers, 17856 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi32ELi8EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi32ELi8EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 48 registers, used 1 barriers, 22208 bytes smem, 536 bytes cmem[0]
 ptxas info    : 10 bytes gmem
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi8ELi32EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi8ELi32EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 80 registers, used 1 barriers, 42400 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi16ELi16EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi16ELi16EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 64 registers, used 1 barriers, 34240 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi32ELi8EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi128ELi32ELi8EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 78 registers, used 1 barriers, 42688 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi8ELi32EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi8ELi32EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 58 registers, used 1 barriers, 21920 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi16ELi16EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi16ELi16EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 80 registers, used 1 barriers, 17856 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi32ELi8EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab46_GLOBAL__N__33a150f8_13_fp32_fused_cu_4e77b08e17fp32_fused_kernelILi64ELi32ELi8EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 40 registers, used 1 barriers, 22208 bytes smem
 ptxas info    : 10 bytes gmem, 80 bytes cmem[4]
 ptxas info    : Compiling entry function '_ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI6__halfLi128EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI6__halfLi128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 168 registers, used 1 barriers, 34816 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI6__halfLi64EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI6__halfLi64EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 151 registers, used 1 barriers, 18432 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI13__nv_bfloat16Li128EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI13__nv_bfloat16Li128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 168 registers, used 1 barriers, 34816 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI13__nv_bfloat16Li64EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI13__nv_bfloat16Li64EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 151 registers, used 1 barriers, 18432 bytes smem, 536 bytes cmem[0]
 ptxas info    : 10 bytes gmem
 ptxas info    : Compiling entry function '_ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI6__halfLi128EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI6__halfLi128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 168 registers, used 1 barriers, 34816 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI6__halfLi64EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI6__halfLi64EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 145 registers, used 1 barriers, 18432 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI13__nv_bfloat16Li128EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI13__nv_bfloat16Li128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 168 registers, used 1 barriers, 34816 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI13__nv_bfloat16Li64EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab38_GLOBAL__N__21121abf_6_mma_cu_98cc100420mma_attention_kernelI13__nv_bfloat16Li64EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 145 registers, used 1 barriers, 18432 bytes smem
 ptxas info    : 10 bytes gmem, 80 bytes cmem[4]
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI6__halfLi128EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI6__halfLi128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 223 registers, used 1 barriers, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI6__halfLi64EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI6__halfLi64EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 137 registers, used 1 barriers, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI13__nv_bfloat16Li128EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI13__nv_bfloat16Li128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 223 registers, used 1 barriers, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI13__nv_bfloat16Li64EEEvNS_10AttnParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI13__nv_bfloat16Li64EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 137 registers, used 1 barriers, 536 bytes cmem[0]
 ptxas info    : 10 bytes gmem
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI6__halfLi128EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI6__halfLi128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 214 registers, used 1 barriers
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI6__halfLi64EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI6__halfLi64EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 145 registers, used 1 barriers
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI13__nv_bfloat16Li128EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI13__nv_bfloat16Li128EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 214 registers, used 1 barriers
 ptxas info    : Compiling entry function '_ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI13__nv_bfloat16Li64EEEvNS_10AttnParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab49_GLOBAL__N__b816659d_16_mma_pipelined_cu_f340a00f20mma_pipelined_kernelI13__nv_bfloat16Li64EEEvNS_10AttnParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 145 registers, used 1 barriers
 ptxas info    : 10 bytes gmem, 80 bytes cmem[4]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi4EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 135 registers, used 1 barriers, 10368 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi2EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 92 registers, used 1 barriers, 5184 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi1EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 60 registers, used 1 barriers, 2592 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi8EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi8EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 144 registers, used 1 barriers, 12544 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi4EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 87 registers, used 1 barriers, 6272 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi2EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 64 registers, used 1 barriers, 3136 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelIfEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelIfEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 30 registers, used 0 barriers, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi1EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 42 registers, used 1 barriers, 1568 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi4EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 138 registers, used 1 barriers, 10368 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi2EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 93 registers, used 1 barriers, 5184 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi1EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 64 registers, used 1 barriers, 2592 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi8EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi8EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 142 registers, used 1 barriers, 12544 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi4EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 87 registers, used 1 barriers, 6272 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi2EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 68 registers, used 1 barriers, 3136 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelI6__halfEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelI6__halfEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 30 registers, used 0 barriers, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi1EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 40 registers, used 1 barriers, 1568 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi4EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 138 registers, used 1 barriers, 10368 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi2EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 93 registers, used 1 barriers, 5184 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi1EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 64 registers, used 1 barriers, 2592 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi8EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi8EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 142 registers, used 1 barriers, 12544 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi4EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 87 registers, used 1 barriers, 6272 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi2EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 64 registers, used 1 barriers, 3136 bytes smem, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelI13__nv_bfloat16EEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelI13__nv_bfloat16EEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 30 registers, used 0 barriers, 536 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi1EEEvNS_12DecodeParamsE' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 40 registers, used 1 barriers, 1568 bytes smem, 536 bytes cmem[0]
 ptxas info    : 10 bytes gmem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi4EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 195 registers, used 1 barriers, 10368 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi2EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 106 registers, used 1 barriers, 5184 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi1EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi128ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 68 registers, used 1 barriers, 2592 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi8EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi8EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 196 registers, used 1 barriers, 12544 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi4EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 88 registers, used 1 barriers, 6272 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi2EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi2EEEvNS_12DecodeParamsE
+    8 bytes stack frame, 4 bytes spill stores, 4 bytes spill loads
 ptxas info    : Used 56 registers, used 1 barriers, 8 bytes cumulative stack size, 3136 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelIfEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelIfEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 32 registers, used 0 barriers
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi1EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelIfLi64ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 48 registers, used 1 barriers, 1568 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi4EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 135 registers, used 1 barriers, 10368 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi2EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 88 registers, used 1 barriers, 5184 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi1EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi128ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 56 registers, used 1 barriers, 2592 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi8EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi8EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 186 registers, used 1 barriers, 12544 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi4EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi4EEEvNS_12DecodeParamsE
+    8 bytes stack frame, 4 bytes spill stores, 4 bytes spill loads
 ptxas info    : Used 80 registers, used 1 barriers, 8 bytes cumulative stack size, 6272 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi2EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 62 registers, used 1 barriers, 3136 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelI6__halfEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelI6__halfEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 32 registers, used 0 barriers
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi1EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI6__halfLi64ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 40 registers, used 1 barriers, 1568 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi4EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 135 registers, used 1 barriers, 10368 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi2EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 90 registers, used 1 barriers, 5184 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi1EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li128ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 56 registers, used 1 barriers, 2592 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi8EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi8EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 190 registers, used 1 barriers, 12544 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi4EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi4EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 80 registers, used 1 barriers, 6272 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi2EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi2EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 61 registers, used 1 barriers, 3136 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelI13__nv_bfloat16EEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185012merge_kernelI13__nv_bfloat16EEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 32 registers, used 0 barriers
 ptxas info    : Compiling entry function '_ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi1EEEvNS_12DecodeParamsE' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab41_GLOBAL__N__01c2a7ca_9_decode_cu_6d4c185013decode_kernelI13__nv_bfloat16Li64ELi1EEEvNS_12DecodeParamsE
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 40 registers, used 1 barriers, 1568 bytes smem
 ptxas info    : 10 bytes gmem, 80 bytes cmem[4]
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d11gemm_kernelILb0EEEvNS0_7OperandES2_S2_iii' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d11gemm_kernelILb0EEEvNS0_7OperandES2_S2_iii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 30 registers, used 1 barriers, 2176 bytes smem, 484 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d11gemm_kernelILb1EEEvNS0_7OperandES2_S2_iii' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d11gemm_kernelILb1EEEvNS0_7OperandES2_S2_iii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 29 registers, used 1 barriers, 2176 bytes smem, 484 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d14softmax_kernelEPfS1_i' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d14softmax_kernelEPfS1_i
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 31 registers, used 1 barriers, 32 bytes smem, 372 bytes cmem[0]
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d17scale_mask_kernelEPfliifbi' for 'sm_80'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d17scale_mask_kernelEPfliifbi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 20 registers, used 0 barriers, 388 bytes cmem[0]
 ptxas info    : 10 bytes gmem
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d11gemm_kernelILb0EEEvNS0_7OperandES2_S2_iii' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d11gemm_kernelILb0EEEvNS0_7OperandES2_S2_iii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 30 registers, used 1 barriers, 2176 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d11gemm_kernelILb1EEEvNS0_7OperandES2_S2_iii' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d11gemm_kernelILb1EEEvNS0_7OperandES2_S2_iii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 30 registers, used 1 barriers, 2176 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d14softmax_kernelEPfS1_i' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d14softmax_kernelEPfS1_i
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 31 registers, used 1 barriers, 32 bytes smem
 ptxas info    : Compiling entry function '_ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d17scale_mask_kernelEPfliifbi' for 'sm_90'
 ptxas info    : Function properties for _ZN9flash_lab40_GLOBAL__N__59c4304a_8_naive_cu_f6bc817d17scale_mask_kernelEPfliifbi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
 ptxas info    : Used 20 registers, used 0 barriers
