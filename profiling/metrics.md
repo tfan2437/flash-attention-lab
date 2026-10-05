@@ -130,7 +130,8 @@ removes them; `splitkv` raises DRAM throughput with more splits at small batch.
 - Copies: in the Nsight Systems trace
   ([decode-steps-b8-ctx8k.md](reports/h100-80gb-hbm3/decode-steps-b8-ctx8k.md), B = 8, MHA, 8K
   context), 48.8% of `decode_copy`'s GPU time is PyTorch copy kernels, and a step takes 3,147 us
-  against 1,228 us for `decode_inplace` and 462 us for `splitkv`. Confirmed.
+  against 1,228 us for `decode_inplace` and 462 us for `splitkv`. Confirmed. `decode_copy` has no
+  Nsight Compute digest: it is the copy baseline, and this trace measures what the copies cost.
 - Splits: one sequence at 32K keys with one block per head uses 32 blocks on 132 SMs;
   `decode_inplace` reaches 3.4% of DRAM bandwidth with `long_scoreboard` at 19.9 cycles per
   instruction. With the default 64 splits, `splitkv`'s decode kernel reaches 76.3% at 48.9%
